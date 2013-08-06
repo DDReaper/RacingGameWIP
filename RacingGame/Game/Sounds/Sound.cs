@@ -119,9 +119,10 @@ namespace RacingGame.Sounds
                 defaultCategory = audioEngine.GetCategory("Default");
                 gearsCategory = audioEngine.GetCategory("Gears");
                 musicCategory = audioEngine.GetCategory("Music");
-
+#if WINDOWS
                 SetVolumes(GameSettings.Default.SoundVolume,
                     GameSettings.Default.MusicVolume);
+#endif
             }
             catch (NoAudioHardwareException ex)
             {
