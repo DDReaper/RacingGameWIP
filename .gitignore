@@ -1,0 +1,7 @@
+*.user
+*.gpState
+*.suo
+Bin
+obj
+packages
+/*.userprefs

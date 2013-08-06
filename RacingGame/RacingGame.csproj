@@ -1,0 +1,1440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E51C6BF2-605A-4863-9D97-229ED52FDA30}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RacingGame</RootNamespace>
+    <AssemblyName>RacingGame</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\WindowsGL\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\WindowsGL\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Game1.cs" />
+    <Compile Include="Game\GameLogic\BasePlayer.cs" />
+    <Compile Include="Game\GameLogic\CarPhysics.cs" />
+    <Compile Include="Game\GameLogic\ChaseCamera.cs" />
+    <Compile Include="Game\GameLogic\Input.cs" />
+    <Compile Include="Game\GameLogic\Physics\SpringPhysicsObject.cs" />
+    <Compile Include="Game\GameLogic\Player.cs" />
+    <Compile Include="Game\GameLogic\Replay.cs" />
+    <Compile Include="Game\GameLogic\ScreenshotCapturer.cs" />
+    <Compile Include="Game\GameScreens\CarSelection.cs" />
+    <Compile Include="Game\GameScreens\GameScreen.cs" />
+    <Compile Include="Game\GameScreens\Help.cs" />
+    <Compile Include="Game\GameScreens\Highscores.cs" />
+    <Compile Include="Game\GameScreens\IGameScreen.cs" />
+    <Compile Include="Game\GameScreens\MainMenu.cs" />
+    <Compile Include="Game\GameScreens\Options.cs" />
+    <Compile Include="Game\GameScreens\SplashScreen.cs" />
+    <Compile Include="Game\GameScreens\TrackSelection.cs" />
+    <Compile Include="Game\GameSettings.cs" />
+    <Compile Include="Game\Graphics\BaseGame.cs" />
+    <Compile Include="Game\Graphics\LensFlare.cs" />
+    <Compile Include="Game\Graphics\LineManager2D.cs" />
+    <Compile Include="Game\Graphics\LineManager3D.cs" />
+    <Compile Include="Game\Graphics\Material.cs" />
+    <Compile Include="Game\Graphics\MeshRenderManager.cs" />
+    <Compile Include="Game\Graphics\Model.cs" />
+    <Compile Include="Game\Graphics\PlaneRenderer.cs" />
+    <Compile Include="Game\Graphics\TangentVertex.cs" />
+    <Compile Include="Game\Graphics\Texture.cs" />
+    <Compile Include="Game\Graphics\TextureFont.cs" />
+    <Compile Include="Game\Graphics\TextureFontBigNumbers.cs" />
+    <Compile Include="Game\Graphics\UIRenderer.cs" />
+    <Compile Include="Game\Helpers\ColorHelper.cs" />
+    <Compile Include="Game\Helpers\Directories.cs" />
+    <Compile Include="Game\Helpers\FileHelper.cs" />
+    <Compile Include="Game\Helpers\Log.cs" />
+    <Compile Include="Game\Helpers\RandomHelper.cs" />
+    <Compile Include="Game\Helpers\Vector3Helper.cs" />
+    <Compile Include="Game\Landscapes\Landscape.cs" />
+    <Compile Include="Game\Program.cs" />
+    <Compile Include="Game\Storage.cs" />
+    <Compile Include="RacingGameManager.cs" />
+    <Compile Include="Game\Shaders\PostScreenGlow.cs" />
+    <Compile Include="Game\Shaders\PostScreenMenu.cs" />
+    <Compile Include="Game\Shaders\PreScreenSkyCubeMapping.cs" />
+    <Compile Include="Game\Shaders\RenderToTexture.cs" />
+    <Compile Include="Game\Shaders\ShaderEffect.cs" />
+    <Compile Include="Game\Shaders\ShadowMapBlur.cs" />
+    <Compile Include="Game\Shaders\ShadowMapShader.cs" />
+    <Compile Include="Game\Shaders\VBScreenHelper.cs" />
+    <Compile Include="Game\Sounds\Sound.cs" />
+    <Compile Include="Game\Tracks\GuardRail.cs" />
+    <Compile Include="Game\Tracks\Track.cs" />
+    <Compile Include="Game\Tracks\TrackColumns.cs" />
+    <Compile Include="Game\Tracks\TrackCombiModels.cs" />
+    <Compile Include="Game\Tracks\TrackData.cs" />
+    <Compile Include="Game\Tracks\TrackLine.cs" />
+    <Compile Include="Game\Tracks\TrackVertex.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="OpenTK">
+      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\WindowsGL\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="Tao.Sdl">
+      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\WindowsGL\Tao.Sdl.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\WindowsGL\SDL.dll">
+      <Link>SDL.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\GitHub\MonoGame\MonoGame.Framework\MonoGame.Framework.WindowsGL.csproj">
+      <Project>{7de47032-a904-4c29-bd22-2d235e8d91ba}</Project>
+      <Name>MonoGame.Framework.WindowsGL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\GitHub\MonoGame\ThirdParty\Lidgren.Network\Lidgren.Network.Windows.csproj">
+      <Project>{ae483c29-042e-4226-ba52-d247ce7676da}</Project>
+      <Name>Lidgren.Network.Windows</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Audio\RacingGameManager.xgs">
+      <Link>Content\Audio\RacingGameManager.xgs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Audio\Sound Bank.xsb">
+      <Link>Content\Audio\Sound Bank.xsb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Audio\Wave Bank.xwb">
+      <Link>Content\Audio\Wave Bank.xwb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\CombiBuildings.CombiModel">
+      <Link>Content\CombiBuildings.CombiModel</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\CombiHotels.CombiModel">
+      <Link>Content\CombiHotels.CombiModel</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\CombiOilTanks.CombiModel">
+      <Link>Content\CombiOilTanks.CombiModel</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\CombiPalms.CombiModel">
+      <Link>Content\CombiPalms.CombiModel</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\CombiPalms2.CombiModel">
+      <Link>Content\CombiPalms2.CombiModel</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\CombiRuins.CombiModel">
+      <Link>Content\CombiRuins.CombiModel</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\CombiRuins2.CombiModel">
+      <Link>Content\CombiRuins2.CombiModel</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\CombiSandCastle.CombiModel">
+      <Link>Content\CombiSandCastle.CombiModel</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\CombiStones.CombiModel">
+      <Link>Content\CombiStones.CombiModel</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\CombiStones2.CombiModel">
+      <Link>Content\CombiStones2.CombiModel</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\LandscapeHeights.data">
+      <Link>Content\LandscapeHeights.data</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\AlphaDeadTree.xnb">
+      <Link>Content\Models\AlphaDeadTree.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\AlphaPalm.xnb">
+      <Link>Content\Models\AlphaPalm.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\AlphaPalm2.xnb">
+      <Link>Content\Models\AlphaPalm2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\AlphaPalm3.xnb">
+      <Link>Content\Models\AlphaPalm3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\AlphaPalmSmall.xnb">
+      <Link>Content\Models\AlphaPalmSmall.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\AlphaTrain.xnb">
+      <Link>Content\Models\AlphaTrain.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Banner.xnb">
+      <Link>Content\Models\Banner.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Banner2.xnb">
+      <Link>Content\Models\Banner2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Banner3.xnb">
+      <Link>Content\Models\Banner3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Banner4.xnb">
+      <Link>Content\Models\Banner4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Banner5.xnb">
+      <Link>Content\Models\Banner5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Banner6.xnb">
+      <Link>Content\Models\Banner6.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Blockade.xnb">
+      <Link>Content\Models\Blockade.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Blockade2.xnb">
+      <Link>Content\Models\Blockade2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Building.xnb">
+      <Link>Content\Models\Building.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Building2.xnb">
+      <Link>Content\Models\Building2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Building3.xnb">
+      <Link>Content\Models\Building3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Building4.xnb">
+      <Link>Content\Models\Building4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Building5.xnb">
+      <Link>Content\Models\Building5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Car.xnb">
+      <Link>Content\Models\Car.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\CarSelectionPlate.xnb">
+      <Link>Content\Models\CarSelectionPlate.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Casino01.xnb">
+      <Link>Content\Models\Casino01.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Cube.xnb">
+      <Link>Content\Models\Cube.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Goal.xnb">
+      <Link>Content\Models\Goal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\GuardRailHolder.xnb">
+      <Link>Content\Models\GuardRailHolder.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Hotel01.xnb">
+      <Link>Content\Models\Hotel01.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Hotel02.xnb">
+      <Link>Content\Models\Hotel02.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Hydrant.xnb">
+      <Link>Content\Models\Hydrant.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Kaktus.xnb">
+      <Link>Content\Models\Kaktus.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Kaktus2.xnb">
+      <Link>Content\Models\Kaktus2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\KaktusBenny.xnb">
+      <Link>Content\Models\KaktusBenny.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\KaktusSeg.xnb">
+      <Link>Content\Models\KaktusSeg.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Laterne.xnb">
+      <Link>Content\Models\Laterne.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Laterne2Sides.xnb">
+      <Link>Content\Models\Laterne2Sides.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\OilPump.xnb">
+      <Link>Content\Models\OilPump.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\OilTanks.xnb">
+      <Link>Content\Models\OilTanks.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\RoadColumnSegment.xnb">
+      <Link>Content\Models\RoadColumnSegment.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Roadsign.xnb">
+      <Link>Content\Models\Roadsign.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Roadsign2.xnb">
+      <Link>Content\Models\Roadsign2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Ruin.xnb">
+      <Link>Content\Models\Ruin.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\RuinHouse.xnb">
+      <Link>Content\Models\RuinHouse.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\SandCastle.xnb">
+      <Link>Content\Models\SandCastle.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\SharpRock.xnb">
+      <Link>Content\Models\SharpRock.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\SharpRock2.xnb">
+      <Link>Content\Models\SharpRock2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Sign.xnb">
+      <Link>Content\Models\Sign.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Sign2.xnb">
+      <Link>Content\Models\Sign2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\SignCurveLeft.xnb">
+      <Link>Content\Models\SignCurveLeft.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\SignCurveRight.xnb">
+      <Link>Content\Models\SignCurveRight.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\SignWarning.xnb">
+      <Link>Content\Models\SignWarning.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\StartLight.xnb">
+      <Link>Content\Models\StartLight.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\StartLight2.xnb">
+      <Link>Content\Models\StartLight2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\StartLight3.xnb">
+      <Link>Content\Models\StartLight3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Stone4.xnb">
+      <Link>Content\Models\Stone4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Stone5.xnb">
+      <Link>Content\Models\Stone5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Train.xnb">
+      <Link>Content\Models\Train.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Trashcan.xnb">
+      <Link>Content\Models\Trashcan.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Windmill.xnb">
+      <Link>Content\Models\Windmill.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\LandscapeNormalMapping.xnb">
+      <Link>Content\Shaders\LandscapeNormalMapping.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\LightingShader.xnb">
+      <Link>Content\Shaders\LightingShader.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\LineRendering.xnb">
+      <Link>Content\Shaders\LineRendering.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\NormalMapping.xnb">
+      <Link>Content\Shaders\NormalMapping.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\PostScreenGlow.xnb">
+      <Link>Content\Shaders\PostScreenGlow.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\PostScreenMenu.xnb">
+      <Link>Content\Shaders\PostScreenMenu.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\PostScreenShadowBlur.xnb">
+      <Link>Content\Shaders\PostScreenShadowBlur.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\PreScreenSkyCubeMapping.xnb">
+      <Link>Content\Shaders\PreScreenSkyCubeMapping.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\ReflectionSimpleGlass.xnb">
+      <Link>Content\Shaders\ReflectionSimpleGlass.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\ShadowMap.xnb">
+      <Link>Content\Shaders\ShadowMap.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Ast.xnb">
+      <Link>Content\textures\Ast.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Ast_0.xnb">
+      <Link>Content\textures\Ast_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Ast_Normal.xnb">
+      <Link>Content\textures\Ast_Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Ast_Normal_0.xnb">
+      <Link>Content\textures\Ast_Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\background.xnb">
+      <Link>Content\textures\background.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\banner.xnb">
+      <Link>Content\textures\banner.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\banner2.xnb">
+      <Link>Content\textures\banner2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\banner2_0.xnb">
+      <Link>Content\textures\banner2_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\banner3.xnb">
+      <Link>Content\textures\banner3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\banner3_0.xnb">
+      <Link>Content\textures\banner3_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\bannerNormal.xnb">
+      <Link>Content\textures\bannerNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\bannerNormal_0.xnb">
+      <Link>Content\textures\bannerNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\banner_0.xnb">
+      <Link>Content\textures\banner_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Blockade.xnb">
+      <Link>Content\textures\Blockade.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\BlockadeNormal.xnb">
+      <Link>Content\textures\BlockadeNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\BlockadeNormal_0.xnb">
+      <Link>Content\textures\BlockadeNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Blockade_0.xnb">
+      <Link>Content\textures\Blockade_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Building.xnb">
+      <Link>Content\textures\Building.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building2.xnb">
+      <Link>Content\textures\building2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building2Normal.xnb">
+      <Link>Content\textures\building2Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building2Normal_0.xnb">
+      <Link>Content\textures\building2Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building2_0.xnb">
+      <Link>Content\textures\building2_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building3.xnb">
+      <Link>Content\textures\building3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building3Normal.xnb">
+      <Link>Content\textures\building3Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building3Normal_0.xnb">
+      <Link>Content\textures\building3Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building3_0.xnb">
+      <Link>Content\textures\building3_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building4.xnb">
+      <Link>Content\textures\building4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building4Normal.xnb">
+      <Link>Content\textures\building4Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building4Normal_0.xnb">
+      <Link>Content\textures\building4Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building4_0.xnb">
+      <Link>Content\textures\building4_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building5.xnb">
+      <Link>Content\textures\building5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building5Normal.xnb">
+      <Link>Content\textures\building5Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building5Normal_0.xnb">
+      <Link>Content\textures\building5Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\building5_0.xnb">
+      <Link>Content\textures\building5_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\buildingNormal.xnb">
+      <Link>Content\textures\buildingNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\buildingNormal_0.xnb">
+      <Link>Content\textures\buildingNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Building_0.xnb">
+      <Link>Content\textures\Building_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\buttons.xnb">
+      <Link>Content\textures\buttons.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\CarSelectionPlate.xnb">
+      <Link>Content\textures\CarSelectionPlate.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\CarSelectionPlateNormal.xnb">
+      <Link>Content\textures\CarSelectionPlateNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\CarSelectionPlateNormal_0.xnb">
+      <Link>Content\textures\CarSelectionPlateNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\CarSelectionPlate_0.xnb">
+      <Link>Content\textures\CarSelectionPlate_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Circle.xnb">
+      <Link>Content\textures\Circle.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\CityGround.xnb">
+      <Link>Content\textures\CityGround.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\CityGroundNormal.xnb">
+      <Link>Content\textures\CityGroundNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\ColorSelection.xnb">
+      <Link>Content\textures\ColorSelection.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Fort.xnb">
+      <Link>Content\textures\Fort.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\FortNormal.xnb">
+      <Link>Content\textures\FortNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\FortNormal_0.xnb">
+      <Link>Content\textures\FortNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Fort_0.xnb">
+      <Link>Content\textures\Fort_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\GameFont.xnb">
+      <Link>Content\textures\GameFont.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\garbagecan.xnb">
+      <Link>Content\textures\garbagecan.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\garbagecanNormal.xnb">
+      <Link>Content\textures\garbagecanNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\garbagecanNormal_0.xnb">
+      <Link>Content\textures\garbagecanNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\garbagecan_0.xnb">
+      <Link>Content\textures\garbagecan_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\gelaender.xnb">
+      <Link>Content\textures\gelaender.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\gelaenderNormal.xnb">
+      <Link>Content\textures\gelaenderNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\gelaenderNormal_0.xnb">
+      <Link>Content\textures\gelaenderNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\gelaender_0.xnb">
+      <Link>Content\textures\gelaender_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Glow.xnb">
+      <Link>Content\textures\Glow.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Goal.xnb">
+      <Link>Content\textures\Goal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\GoalNormal.xnb">
+      <Link>Content\textures\GoalNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\GoalNormal_0.xnb">
+      <Link>Content\textures\GoalNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Goal_0.xnb">
+      <Link>Content\textures\Goal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Halo.xnb">
+      <Link>Content\textures\Halo.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\headers.xnb">
+      <Link>Content\textures\headers.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\HelpScreenWindows.xnb">
+      <Link>Content\textures\HelpScreenWindows.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Hotel01.xnb">
+      <Link>Content\textures\Hotel01.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Hotel01Normal.xnb">
+      <Link>Content\textures\Hotel01Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Hotel01Normal_0.xnb">
+      <Link>Content\textures\Hotel01Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Hotel01_0.xnb">
+      <Link>Content\textures\Hotel01_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Hydrant.xnb">
+      <Link>Content\textures\Hydrant.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\HydrantNormal.xnb">
+      <Link>Content\textures\HydrantNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\HydrantNormal_0.xnb">
+      <Link>Content\textures\HydrantNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Hydrant_0.xnb">
+      <Link>Content\textures\Hydrant_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\ingame.xnb">
+      <Link>Content\textures\ingame.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Kaktus.xnb">
+      <Link>Content\textures\Kaktus.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\KaktusBenny.xnb">
+      <Link>Content\textures\KaktusBenny.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\KaktusBennyNormal.xnb">
+      <Link>Content\textures\KaktusBennyNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\KaktusBennyNormal_0.xnb">
+      <Link>Content\textures\KaktusBennyNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\KaktusBenny_0.xnb">
+      <Link>Content\textures\KaktusBenny_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\KaktusNormal.xnb">
+      <Link>Content\textures\KaktusNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\KaktusNormal_0.xnb">
+      <Link>Content\textures\KaktusNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\KaktusSeg.xnb">
+      <Link>Content\textures\KaktusSeg.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\KaktusSegNormal.xnb">
+      <Link>Content\textures\KaktusSegNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\KaktusSegNormal_0.xnb">
+      <Link>Content\textures\KaktusSegNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\KaktusSeg_0.xnb">
+      <Link>Content\textures\KaktusSeg_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Kaktus_0.xnb">
+      <Link>Content\textures\Kaktus_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\ladyluck.xnb">
+      <Link>Content\textures\ladyluck.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\ladyluckNormal.xnb">
+      <Link>Content\textures\ladyluckNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\ladyluckNormal_0.xnb">
+      <Link>Content\textures\ladyluckNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\ladyluck_0.xnb">
+      <Link>Content\textures\ladyluck_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Landscape.xnb">
+      <Link>Content\textures\Landscape.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\LandscapeDetail.xnb">
+      <Link>Content\textures\LandscapeDetail.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\LandscapeNormal.xnb">
+      <Link>Content\textures\LandscapeNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Leitplanke.xnb">
+      <Link>Content\textures\Leitplanke.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\LeitplankeNormal.xnb">
+      <Link>Content\textures\LeitplankeNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\LeitplankeNormal_0.xnb">
+      <Link>Content\textures\LeitplankeNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Leitplanke_0.xnb">
+      <Link>Content\textures\Leitplanke_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Lens.xnb">
+      <Link>Content\textures\Lens.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Light.xnb">
+      <Link>Content\textures\Light.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\LightNormal.xnb">
+      <Link>Content\textures\LightNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\LightNormal_0.xnb">
+      <Link>Content\textures\LightNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Light_0.xnb">
+      <Link>Content\textures\Light_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\MouseCursor.xnb">
+      <Link>Content\textures\MouseCursor.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Noise128x128.xnb">
+      <Link>Content\textures\Noise128x128.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\NormalizeCubeMap.xnb">
+      <Link>Content\textures\NormalizeCubeMap.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\NormalizeCubeMap_0.xnb">
+      <Link>Content\textures\NormalizeCubeMap_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Oiltank.xnb">
+      <Link>Content\textures\Oiltank.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\OiltankNormal.xnb">
+      <Link>Content\textures\OiltankNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\OiltankNormal_0.xnb">
+      <Link>Content\textures\OiltankNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Oiltank_0.xnb">
+      <Link>Content\textures\Oiltank_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\OilWell.xnb">
+      <Link>Content\textures\OilWell.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\OilWellNormal.xnb">
+      <Link>Content\textures\OilWellNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\OilWellNormal_0.xnb">
+      <Link>Content\textures\OilWellNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\OilWell_0.xnb">
+      <Link>Content\textures\OilWell_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\OptionsScreenWindows.xnb">
+      <Link>Content\textures\OptionsScreenWindows.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Palm.xnb">
+      <Link>Content\textures\Palm.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Palm2_stamm.xnb">
+      <Link>Content\textures\Palm2_stamm.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Palm2_stammNormal.xnb">
+      <Link>Content\textures\Palm2_stammNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Palm2_stammNormal_0.xnb">
+      <Link>Content\textures\Palm2_stammNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Palm2_stamm_0.xnb">
+      <Link>Content\textures\Palm2_stamm_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\PalmLeave.xnb">
+      <Link>Content\textures\PalmLeave.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\PalmLeave2.xnb">
+      <Link>Content\textures\PalmLeave2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\PalmLeave2Normal.xnb">
+      <Link>Content\textures\PalmLeave2Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\PalmLeave2Normal_0.xnb">
+      <Link>Content\textures\PalmLeave2Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\PalmLeave2_0.xnb">
+      <Link>Content\textures\PalmLeave2_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\PalmLeaveNormal.xnb">
+      <Link>Content\textures\PalmLeaveNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\PalmLeaveNormal_0.xnb">
+      <Link>Content\textures\PalmLeaveNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\PalmLeave_0.xnb">
+      <Link>Content\textures\PalmLeave_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\PalmNormal.xnb">
+      <Link>Content\textures\PalmNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\PalmNormal_0.xnb">
+      <Link>Content\textures\PalmNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Palm_0.xnb">
+      <Link>Content\textures\Palm_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\plants.xnb">
+      <Link>Content\textures\plants.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\plants_0.xnb">
+      <Link>Content\textures\plants_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\plants_normal.xnb">
+      <Link>Content\textures\plants_normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\plants_normal_0.xnb">
+      <Link>Content\textures\plants_normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\plazacasino.xnb">
+      <Link>Content\textures\plazacasino.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\plazacasinoNormal.xnb">
+      <Link>Content\textures\plazacasinoNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\plazacasinoNormal_0.xnb">
+      <Link>Content\textures\plazacasinoNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\plazacasino_0.xnb">
+      <Link>Content\textures\plazacasino_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\plazaschild.xnb">
+      <Link>Content\textures\plazaschild.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\plazaschildNormal.xnb">
+      <Link>Content\textures\plazaschildNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\plazaschildNormal_0.xnb">
+      <Link>Content\textures\plazaschildNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\plazaschild_0.xnb">
+      <Link>Content\textures\plazaschild_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\pokal1.xnb">
+      <Link>Content\textures\pokal1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\pokal2.xnb">
+      <Link>Content\textures\pokal2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\pokal3.xnb">
+      <Link>Content\textures\pokal3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RacerCar.xnb">
+      <Link>Content\textures\RacerCar.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RacerCar2.xnb">
+      <Link>Content\textures\RacerCar2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RacerCar3.xnb">
+      <Link>Content\textures\RacerCar3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RacerCarNormal.xnb">
+      <Link>Content\textures\RacerCarNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RacerCarNormal_0.xnb">
+      <Link>Content\textures\RacerCarNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RacerCar_0.xnb">
+      <Link>Content\textures\RacerCar_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Ring.xnb">
+      <Link>Content\textures\Ring.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Road.xnb">
+      <Link>Content\textures\Road.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RoadBack.xnb">
+      <Link>Content\textures\RoadBack.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RoadBackNormal.xnb">
+      <Link>Content\textures\RoadBackNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RoadCement.xnb">
+      <Link>Content\textures\RoadCement.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RoadCementNormal.xnb">
+      <Link>Content\textures\RoadCementNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RoadColumnSegment.xnb">
+      <Link>Content\textures\RoadColumnSegment.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RoadColumnSegmentNormal.xnb">
+      <Link>Content\textures\RoadColumnSegmentNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RoadColumnSegmentNormal_0.xnb">
+      <Link>Content\textures\RoadColumnSegmentNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RoadColumnSegment_0.xnb">
+      <Link>Content\textures\RoadColumnSegment_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RoadNormal.xnb">
+      <Link>Content\textures\RoadNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\roadsign1.xnb">
+      <Link>Content\textures\roadsign1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\roadsign1Normal.xnb">
+      <Link>Content\textures\roadsign1Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\roadsign1Normal_0.xnb">
+      <Link>Content\textures\roadsign1Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\roadsign1_0.xnb">
+      <Link>Content\textures\roadsign1_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\roadsign2.xnb">
+      <Link>Content\textures\roadsign2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\roadsign2Normal.xnb">
+      <Link>Content\textures\roadsign2Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\roadsign2Normal_0.xnb">
+      <Link>Content\textures\roadsign2Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\roadsign2_0.xnb">
+      <Link>Content\textures\roadsign2_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RoadTunnel.xnb">
+      <Link>Content\textures\RoadTunnel.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\RoadTunnelNormal.xnb">
+      <Link>Content\textures\RoadTunnelNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\ruin.xnb">
+      <Link>Content\textures\ruin.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Ruin01.xnb">
+      <Link>Content\textures\Ruin01.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Ruin01_0.xnb">
+      <Link>Content\textures\Ruin01_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Ruin01_Normal.xnb">
+      <Link>Content\textures\Ruin01_Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Ruin01_Normal_0.xnb">
+      <Link>Content\textures\Ruin01_Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\ruinNormal.xnb">
+      <Link>Content\textures\ruinNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\ruinNormal_0.xnb">
+      <Link>Content\textures\ruinNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\ruin_0.xnb">
+      <Link>Content\textures\ruin_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Schild.xnb">
+      <Link>Content\textures\Schild.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Schild2.xnb">
+      <Link>Content\textures\Schild2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Schild2_0.xnb">
+      <Link>Content\textures\Schild2_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\SchildNormal.xnb">
+      <Link>Content\textures\SchildNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\SchildNormal_0.xnb">
+      <Link>Content\textures\SchildNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Schild_0.xnb">
+      <Link>Content\textures\Schild_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Schild_Kurve_links.xnb">
+      <Link>Content\textures\Schild_Kurve_links.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Schild_Kurve_linksNormal.xnb">
+      <Link>Content\textures\Schild_Kurve_linksNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Schild_Kurve_linksNormal_0.xnb">
+      <Link>Content\textures\Schild_Kurve_linksNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Schild_Kurve_links_0.xnb">
+      <Link>Content\textures\Schild_Kurve_links_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\ScreenBorderFadeout.xnb">
+      <Link>Content\textures\ScreenBorderFadeout.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\ShadowDistanceFadeoutMap.xnb">
+      <Link>Content\textures\ShadowDistanceFadeoutMap.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\SharpRock.xnb">
+      <Link>Content\textures\SharpRock.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\SharpRock3Normal.xnb">
+      <Link>Content\textures\SharpRock3Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\SharpRock3Normal_0.xnb">
+      <Link>Content\textures\SharpRock3Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\SharpRockNormal.xnb">
+      <Link>Content\textures\SharpRockNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\SharpRockNormal_0.xnb">
+      <Link>Content\textures\SharpRockNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\SharpRock_0.xnb">
+      <Link>Content\textures\SharpRock_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\SignWarning.xnb">
+      <Link>Content\textures\SignWarning.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\SignWarningNormal.xnb">
+      <Link>Content\textures\SignWarningNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\SignWarningNormal_0.xnb">
+      <Link>Content\textures\SignWarningNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\SignWarning_0.xnb">
+      <Link>Content\textures\SignWarning_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\SkyCubeMap.xnb">
+      <Link>Content\textures\SkyCubeMap.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\SkyCubeMap_0.xnb">
+      <Link>Content\textures\SkyCubeMap_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Stone04.xnb">
+      <Link>Content\textures\Stone04.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Stone04Normal.xnb">
+      <Link>Content\textures\Stone04Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Stone04Normal_0.xnb">
+      <Link>Content\textures\Stone04Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Stone04_0.xnb">
+      <Link>Content\textures\Stone04_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Stone5.xnb">
+      <Link>Content\textures\Stone5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Stone5Normal.xnb">
+      <Link>Content\textures\Stone5Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Stone5Normal_0.xnb">
+      <Link>Content\textures\Stone5Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Stone5_0.xnb">
+      <Link>Content\textures\Stone5_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Streaks.xnb">
+      <Link>Content\textures\Streaks.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\streetlamp.xnb">
+      <Link>Content\textures\streetlamp.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\streetlamp2.xnb">
+      <Link>Content\textures\streetlamp2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\streetlamp2Normal.xnb">
+      <Link>Content\textures\streetlamp2Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\streetlamp2Normal_0.xnb">
+      <Link>Content\textures\streetlamp2Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\streetlamp2_0.xnb">
+      <Link>Content\textures\streetlamp2_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\streetlampNormal.xnb">
+      <Link>Content\textures\streetlampNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\streetlampNormal_0.xnb">
+      <Link>Content\textures\streetlampNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\streetlamp_0.xnb">
+      <Link>Content\textures\streetlamp_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Sun.xnb">
+      <Link>Content\textures\Sun.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\TLight.xnb">
+      <Link>Content\textures\TLight.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\TLightNormal.xnb">
+      <Link>Content\textures\TLightNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\TLightNormal_0.xnb">
+      <Link>Content\textures\TLightNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\TLight_0.xnb">
+      <Link>Content\textures\TLight_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\track.xnb">
+      <Link>Content\textures\track.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\train.xnb">
+      <Link>Content\textures\train.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\trainNormal.xnb">
+      <Link>Content\textures\trainNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\trainNormal_0.xnb">
+      <Link>Content\textures\trainNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\train_0.xnb">
+      <Link>Content\textures\train_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Trunk.xnb">
+      <Link>Content\textures\Trunk.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Trunk_0.xnb">
+      <Link>Content\textures\Trunk_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Trunk_Normal.xnb">
+      <Link>Content\textures\Trunk_Normal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Trunk_Normal_0.xnb">
+      <Link>Content\textures\Trunk_Normal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Windmill.xnb">
+      <Link>Content\textures\Windmill.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\WindmillNormal.xnb">
+      <Link>Content\textures\WindmillNormal.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\WindmillNormal_0.xnb">
+      <Link>Content\textures\WindmillNormal_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Windmill_0.xnb">
+      <Link>Content\textures\Windmill_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\TrackAdvanced.Track">
+      <Link>Content\TrackAdvanced.Track</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\TrackBeginner.Track">
+      <Link>Content\TrackBeginner.Track</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\TrackExpert.Track">
+      <Link>Content\TrackExpert.Track</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
