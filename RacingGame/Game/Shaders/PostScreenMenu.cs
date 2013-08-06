@@ -193,8 +193,9 @@ namespace RacingGame.Shaders
 
             // Don't use or write to the z buffer
             BaseGame.Device.DepthStencilState = DepthStencilState.None;
+
             // Also don't use any kind of blending.
-            BaseGame.Device.BlendState = BlendState.AlphaBlend;
+            BaseGame.Device.BlendState = BlendState.Opaque;
 
             if (windowSize != null)
                 windowSize.SetValue(
@@ -224,10 +225,12 @@ namespace RacingGame.Shaders
                     else if (pass == 2)
                         blurMap2Texture.SetRenderTarget();
                     else
-                        // Do a full reset back to the back buffer
+                    {
                         BaseGame.ResetRenderTarget(true);
+                    }
 
                     EffectPass effectPass = effect.CurrentTechnique.Passes[pass];
+                    effectPass.Apply();
                     VBScreenHelper.Render();
 
                     if (pass == 0)
@@ -235,25 +238,26 @@ namespace RacingGame.Shaders
                         downsampleMapTexture.Resolve();
                         if (downsampleMap != null)
                             downsampleMap.SetValue(downsampleMapTexture.XnaTexture);
+                        effectPass.Apply();
                     }
                     else if (pass == 1)
                     {
                         blurMap1Texture.Resolve();
                         if (blurMap1 != null)
                             blurMap1.SetValue(blurMap1Texture.XnaTexture);
+                        effectPass.Apply();
                     }
                     else if (pass == 2)
                     {
                         blurMap2Texture.Resolve();
                         if (blurMap2 != null)
                             blurMap2.SetValue(blurMap2Texture.XnaTexture);
+                        effectPass.Apply();
                     }
                 }
             }
             finally
             {
-                //effect.End();
-
                 // Restore z buffer state
                 BaseGame.Device.DepthStencilState = DepthStencilState.Default;
             }

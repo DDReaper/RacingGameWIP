@@ -71,7 +71,7 @@ namespace RacingGame.Shaders
         public PreScreenSkyCubeMapping()
             : base(Filename)
         {
-            cube = BaseGame.Content.Load<XnaModel>(@"Content\models\Cube");
+            cube = BaseGame.Content.Load<XnaModel>(@"Content\Models\Cube");
         }
         #endregion
 
@@ -106,7 +106,7 @@ namespace RacingGame.Shaders
 
             // Don't use or write to the z buffer
             BaseGame.Device.DepthStencilState = DepthStencilState.None;
-            BaseGame.Device.RasterizerState.CullMode = CullMode.None;
+            BaseGame.Device.RasterizerState = RasterizerState.CullNone;
 
             // Also don't use any kind of blending.
             BaseGame.Device.BlendState = BlendState.Opaque;
@@ -122,7 +122,9 @@ namespace RacingGame.Shaders
 
             // Reset previous render states
             BaseGame.Device.DepthStencilState = DepthStencilState.Default;
-            BaseGame.Device.RasterizerState.CullMode = CullMode.CullCounterClockwiseFace;
+            BaseGame.Device.RasterizerState = RasterizerState.CullCounterClockwise;
+
+            BaseGame.Device.BlendState = BlendState.AlphaBlend;
         }
 
         /// <summary>

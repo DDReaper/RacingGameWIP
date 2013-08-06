@@ -292,6 +292,7 @@ namespace RacingGame.Shaders
             WorldMatrix = world;
             WorldViewProjMatrix =
                 world * lightViewMatrix * lightProjectionMatrix;
+            effect.CurrentTechnique.Passes[0].Apply();
         }
 
         /// <summary>
@@ -310,15 +311,8 @@ namespace RacingGame.Shaders
             CalcSimpleDirectionalShadowMappingMatrix();
 
             // Time to generate the shadow texture
-            RenderTarget2D remBackBufferSurface = null;
             // Start rendering onto the shadow map
             shadowMapTexture.SetRenderTarget();
-            //if (shadowMapTexture.ZBufferSurface != null)
-            //{
-            //    remBackBufferSurface = BaseGame.Device.DepthStencilBuffer;
-            //    BaseGame.Device.DepthStencilBuffer =
-            //        shadowMapTexture.ZBufferSurface;
-            //}
 
             // Make sure depth buffer is on
             BaseGame.Device.DepthStencilState = DepthStencilState.Default;
@@ -338,9 +332,6 @@ namespace RacingGame.Shaders
 
             // Set render target back to default
             BaseGame.ResetRenderTarget(false);
-
-            //if (shadowMapTexture.ZBufferSurface != null)
-            //    BaseGame.Device.DepthStencilBuffer = remBackBufferSurface;
 
             BaseGame.ViewMatrix = remViewMatrix;
             BaseGame.ProjectionMatrix = remProjMatrix;
@@ -374,6 +365,7 @@ namespace RacingGame.Shaders
                 lightProjectionMatrix;
             worldViewProjLight.SetValue(worldViewProjLightMatrix);
 
+            effect.CurrentTechnique.Passes[0].Apply();
         }
 
         /// <summary>

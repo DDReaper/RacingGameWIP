@@ -624,10 +624,9 @@ namespace RacingGame.Shaders
         public void Reload()
         {
             // Load shader
-            var loadedEffect = BaseGame.Content.Load<Effect>(
-                Path.Combine(Directories.ContentDirectory + "\\shaders",
-                shaderContentName));
-            effect = loadedEffect;
+            effect = BaseGame.Content.Load<Effect>(
+                Path.Combine(Directories.ContentDirectory, "Shaders", shaderContentName));
+
             // Reset and get all avialable parameters.
             // This is especially important for derived classes.
             ResetParameters();
@@ -787,6 +786,10 @@ namespace RacingGame.Shaders
         /// </summary>
         public void Update()
         {
+            for (int num = 0; num < effect.CurrentTechnique.Passes.Count; num++)
+            {
+                effect.CurrentTechnique.Passes[num].Apply();
+            }
         }
         #endregion
 
@@ -810,23 +813,17 @@ namespace RacingGame.Shaders
 
             // Start shader
             effect.CurrentTechnique = effect.Techniques[techniqueName];
-            try
-            {
+
 
                 // Render all passes (usually just one)
                 //foreach (EffectPass pass in effect.CurrentTechnique.Passes)
                 for (int num = 0; num < effect.CurrentTechnique.Passes.Count; num++)
                 {
-                    effect.CurrentTechnique.Passes[num].Apply();
+                    EffectPass pass = effect.CurrentTechnique.Passes[num];
 
+                    pass.Apply();
                     renderCode();
                 }
-            }
-            finally
-            {
-                // End shader
-                //effect.End();
-            }
         }
 
         /// <summary>
@@ -853,19 +850,13 @@ namespace RacingGame.Shaders
                 throw new ArgumentNullException("renderCode");
 
             // Start effect (current technique should be set)
-            try
-            {
+
                 // Start first pass
                 effect.CurrentTechnique.Passes[0].Apply();
 
                 // Render
                 renderCode();
 
-            }
-            finally
-            {
-                //effect.End();
-            }
         }
         #endregion
     }

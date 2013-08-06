@@ -30,6 +30,14 @@ namespace RacingGame.Shaders
     /// </summary>
     public class PostScreenGlow : PostScreenMenu
     {
+        static readonly BlendState BlendStateAlphaWrite = new BlendState() {
+                ColorSourceBlend = Blend.One,
+                AlphaSourceBlend = Blend.Zero,
+
+                ColorDestinationBlend = Blend.Zero,
+                AlphaDestinationBlend = Blend.One
+            };
+
         #region Variables
         /// <summary>
         /// The shader effect filename for this shader.
@@ -152,7 +160,7 @@ namespace RacingGame.Shaders
             BaseGame.Device.DepthStencilState = DepthStencilState.None;
             // Also don't use any kind of blending.
             //Update: allow writing to alpha!
-            BaseGame.Device.BlendState = BlendState.Opaque;
+            BaseGame.Device.BlendState = BlendStateAlphaWrite;
 
             if (windowSize != null)
                 windowSize.SetValue(
@@ -172,6 +180,7 @@ namespace RacingGame.Shaders
             if (effect.CurrentTechnique.Passes.Count != 5)
                 throw new InvalidOperationException(
                     "This shader should have exactly 5 passes!");
+
             try
             {
                 for (int pass = 0; pass < effect.CurrentTechnique.Passes.Count;
@@ -186,10 +195,12 @@ namespace RacingGame.Shaders
                     else if (pass == 3)
                         blurMap2Texture.SetRenderTarget();
                     else
-                        // Do a full reset back to the back buffer
+                    {
                         BaseGame.ResetRenderTarget(true);
+                    }
 
-                    effect.CurrentTechnique.Passes[pass].Apply();
+                    EffectPass effectPass = effect.CurrentTechnique.Passes[pass];
+                    effectPass.Apply();
                     // For first effect we use radial blur, draw it with a grid
                     // to get cooler results (more blur at borders than in middle).
                     if (pass == 0)
@@ -202,31 +213,33 @@ namespace RacingGame.Shaders
                         radialSceneMapTexture.Resolve();
                         if (radialSceneMap != null)
                             radialSceneMap.SetValue(radialSceneMapTexture.XnaTexture);
+                        effectPass.Apply();
                     }
                     else if (pass == 1)
                     {
                         downsampleMapTexture.Resolve();
                         if (downsampleMap != null)
                             downsampleMap.SetValue(downsampleMapTexture.XnaTexture);
+                        effectPass.Apply();
                     }
                     else if (pass == 2)
                     {
                         blurMap1Texture.Resolve();
                         if (blurMap1 != null)
                             blurMap1.SetValue(blurMap1Texture.XnaTexture);
+                        effectPass.Apply();
                     }
                     else if (pass == 3)
                     {
                         blurMap2Texture.Resolve();
                         if (blurMap2 != null)
                             blurMap2.SetValue(blurMap2Texture.XnaTexture);
+                        effectPass.Apply();
                     }
                 }
             }
             finally
             {
-                //effect.End();
-
                 // Restore z buffer state
                 BaseGame.Device.DepthStencilState = DepthStencilState.Default;
             }
