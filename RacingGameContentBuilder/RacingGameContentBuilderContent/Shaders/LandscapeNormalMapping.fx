@@ -277,7 +277,7 @@ technique Diffuse20
 {
     pass P0
     {
-        VertexShader = compile vs_2_0 VS_Diffuse();
+        VertexShader = compile vs_1_1 VS_Diffuse();
         PixelShader  = compile ps_2_0 PS_Diffuse();
     }
 }
@@ -316,7 +316,7 @@ technique Diffuse20Transparent
         SrcBlend = SrcAlpha;
         DestBlend = InvSrcAlpha;
         
-        VertexShader = compile vs_2_0 VS_Diffuse();
+        VertexShader = compile vs_1_1 VS_Diffuse();
         PixelShader  = compile ps_2_0 PS_Diffuse_Transparent();
     }
 }
@@ -479,7 +479,7 @@ technique Specular20
 {
     pass P0
     {
-        VertexShader = compile vs_2_0 VS_Specular20();
+        VertexShader = compile vs_1_1 VS_Specular20();
         PixelShader  = compile ps_2_0 PS_Specular20();
     }
 }
@@ -568,7 +568,7 @@ technique DiffuseSpecular20
 {
     pass P0
     {
-        VertexShader = compile vs_2_0 VS_Specular20();
+        VertexShader = compile vs_1_1 VS_Specular20();
         PixelShader  = compile ps_2_0 PS_DiffuseSpecular20();
     }
 }
@@ -704,7 +704,7 @@ technique SpecularWithReflection20
 {
     pass P0
     {
-        VertexShader = compile vs_2_0 VS_SpecularWithReflection20();
+        VertexShader = compile vs_1_1 VS_SpecularWithReflection20();
         PixelShader  = compile ps_2_0 PS_SpecularWithReflection20();
     }
 }
@@ -816,7 +816,7 @@ technique DiffuseWithDetail20
 {
     pass P0
     {
-        VertexShader = compile vs_2_0 VS_DiffuseWithDetail();
-        PixelShader  = compile ps_3_0 PS_DiffuseWithDetail();
+        VertexShader = compile vs_1_1 VS_DiffuseWithDetail();
+        PixelShader  = compile ps_2_0 PS_DiffuseWithDetail();
     }
 }

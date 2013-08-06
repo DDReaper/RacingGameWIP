@@ -54,7 +54,7 @@ technique LineRendering3D
 {
     pass PassFor3D
     {
-        VertexShader = compile vs_2_0 LineRenderingVS();
+        VertexShader = compile vs_1_1 LineRenderingVS();
         PixelShader = compile ps_2_0 LineRenderingPS();
     }
 }
@@ -63,7 +63,7 @@ technique LineRendering2D
 {
     pass PassFor2D
     {
-        VertexShader = compile vs_2_0 LineRendering2DVS();
+        VertexShader = compile vs_1_1 LineRendering2DVS();
         PixelShader = compile ps_2_0 LineRendering2DPS();
     }
 }

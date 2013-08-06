@@ -46,7 +46,7 @@ float HighlightIntensity <
     float UIStep = 0.01f;
 > = 0.145f;
 
-// Blur Width is used for ps_2_0 (and for ps_2_0 now too)!
+// Blur Width is used for ps_2_0 (and for ps_1_1 now too)!
 float BlurWidth <
     string UIName = "Blur width";
     string UIWidget = "slider";
@@ -200,7 +200,7 @@ float4 PS_DisplayAlpha(
 }
 
 /////////////////////////////
-// ps_2_0 shader functions //
+// ps_1_1 shader functions //
 /////////////////////////////
 
 // Generate texture coordinates to only 2 sample neighbours (can't do more in ps)
@@ -226,7 +226,7 @@ float4 PS_DownSample11(
 {
     float4 c;
 
-    // sub sampling (can't do more in ps_2_0)
+    // sub sampling (can't do more in ps_1_1)
     c = tex2D(tex, In.texCoord[0])/2;
     c += tex2D(tex, In.texCoord[1])/2;
     
@@ -404,7 +404,7 @@ float4 PS_ComposeFinalImage20(
     return ret;
 }
 
-// Bloom technique for ps_2_0 (not that powerful, but looks still gooood)
+// Bloom technique for ps_1_1 (not that powerful, but looks still gooood)
 technique ScreenGlow
 <
     // Script stuff is just for FX Composer
@@ -435,7 +435,8 @@ technique ScreenGlow
     {
         // Disable alpha testing, else most pixels will be skipped
         // because of the highlight HDR technique tricks used here!
-        VertexShader = compile vs_2_0 VS_DownSample11();
+        //AlphaTestEnable = false;
+        VertexShader = compile vs_1_1 VS_DownSample11();
         PixelShader  = compile ps_2_0 PS_DownSample11(sceneMapSampler);
     }
 
@@ -449,7 +450,7 @@ technique ScreenGlow
             "Draw=Buffer;";
     >
     {
-        VertexShader = compile vs_2_0 VS_SimpleBlur(float2(2, 0));
+        VertexShader = compile vs_1_1 VS_SimpleBlur(float2(2, 0));
         PixelShader  = compile ps_2_0 PS_SimpleBlur(downsampleMapSampler);
     }
 
@@ -462,7 +463,7 @@ technique ScreenGlow
             "Draw=Buffer;";
     >
     {
-        VertexShader = compile vs_2_0 VS_SimpleBlur(float2(0, 2));
+        VertexShader = compile vs_1_1 VS_SimpleBlur(float2(0, 2));
         PixelShader  = compile ps_2_0 PS_SimpleBlur(blurMap1Sampler);
     }
 
@@ -477,7 +478,7 @@ technique ScreenGlow
         // Save 1 pass by combining the radial blur effect and the compose pass.
         // This pass is not as fast as the previous passes (they were done
         // in 1/16 of the original screen size and executed very fast).
-        VertexShader = compile vs_2_0 VS_ComposeFinalImage11();
+        VertexShader = compile vs_1_1 VS_ComposeFinalImage11();
         PixelShader  = compile ps_2_0 PS_ComposeFinalImage11(
             sceneMapSampler, blurMap2Sampler);
     }
@@ -615,7 +616,8 @@ technique ScreenGlow20
     {
         // Disable alpha testing, else most pixels will be skipped
         // because of the highlight HDR technique tricks used here!
-        VertexShader = compile vs_2_0 VS_DownSample20();
+        //AlphaTestEnable = false;
+        VertexShader = compile vs_1_1 VS_DownSample20();
         PixelShader  = compile ps_2_0 PS_DownSample20(sceneMapSampler);
     }
 
@@ -655,7 +657,7 @@ technique ScreenGlow20
     {
         // This pass is not as fast as the previous passes (they were done
         // in 1/16 of the original screen size and executed very fast).
-        VertexShader = compile vs_2_0 VS_ScreenQuadSampleUp();
+        VertexShader = compile vs_1_1 VS_ScreenQuadSampleUp();
         PixelShader  = compile ps_2_0 PS_ComposeFinalImage20(
             sceneMapSampler, blurMap2Sampler);
     }

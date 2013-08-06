@@ -180,7 +180,7 @@ technique ReflectionSpecular
         AlphaBlendEnable = true;
         SrcBlend = SrcAlpha;
         DestBlend = InvSrcAlpha;    
-        VertexShader = compile vs_2_0 VS_ReflectionSpecular();
+        VertexShader = compile vs_1_1 VS_ReflectionSpecular();
         PixelShader  = compile ps_2_0 PS_ReflectionSpecular();
     }
 }
@@ -245,7 +245,7 @@ technique ReflectionSpecular20
         SrcBlend = SrcAlpha;
         DestBlend = InvSrcAlpha;
         
-        VertexShader = compile vs_2_0 VS_ReflectionSpecular20();
+        VertexShader = compile vs_1_1 VS_ReflectionSpecular20();
         PixelShader  = compile ps_2_0 PS_ReflectionSpecular20();
     }
 }

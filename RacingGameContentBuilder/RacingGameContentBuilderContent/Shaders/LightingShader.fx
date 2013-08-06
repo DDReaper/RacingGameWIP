@@ -110,7 +110,7 @@ technique Diffuse
 {
     pass P0
     {
-        VertexShader = compile vs_2_0 VS_Diffuse();
+        VertexShader = compile vs_1_1 VS_Diffuse();
         PixelShader  = compile ps_2_0 PS_Diffuse();
     }
 }
@@ -181,7 +181,7 @@ technique SpecularPerPixel
 {
     pass P0
     {
-        VertexShader = compile vs_2_0 VS_SpecularPerPixel();
+        VertexShader = compile vs_1_1 VS_SpecularPerPixel();
         PixelShader  = compile ps_2_0 PS_SpecularPerPixel();
     }
 }
@@ -214,7 +214,8 @@ float4 PS_SpecularPerPixel20(VertexOutput_SpecularPerPixel In) : COLOR
     float4 textureColor = tex2D(diffuseTextureSampler, In.texCoord);
     float3 normal = normalize(In.normal);
     float brightness = dot(normal, lightDir);
-    float specular = pow(abs(dot(normal, In.halfVec)), specularPower);
+	float dotp = dot(normal, In.halfVec);
+    float specular = pow(dotp, specularPower);
     return textureColor *
         (ambientColor +
         brightness * diffuseColor) +
@@ -266,7 +267,7 @@ technique ShadowCar
         AlphaBlendEnable = true;
         SrcBlend = SrcAlpha;
         DestBlend = One;
-        VertexShader = compile vs_2_0 VS_ShadowCar20();
+        VertexShader = compile vs_1_1 VS_ShadowCar20();
         PixelShader  = compile ps_2_0 PS_ShadowCar20();
     }
 }
@@ -279,7 +280,7 @@ technique ShadowCar20
         AlphaBlendEnable = true;
         SrcBlend = SrcAlpha;
         DestBlend = One;
-        VertexShader = compile vs_2_0 VS_ShadowCar20();
+        VertexShader = compile vs_1_1 VS_ShadowCar20();
         PixelShader  = compile ps_2_0 PS_ShadowCar20();
     }
 }

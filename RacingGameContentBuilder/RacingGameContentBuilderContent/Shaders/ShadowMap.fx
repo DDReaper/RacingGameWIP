@@ -113,7 +113,7 @@ float4 PS_GenerateShadowMap(VB_GenerateShadowMap In) : COLOR
 {
     // Just set the interpolated depth value.
     // Format should be R32F or R16F, if that is not possible
-    // A8R8G8B8 is used, which is obviously not that percise.
+    // A8R8G8B8 is used, which is obviously not that precise.
     return In.depth;
 }
 
@@ -402,7 +402,7 @@ float4 PS_UseShadowMap20(VB_UseShadowMap20 In) : COLOR
     // We can skip this if its too far away anway (else very far away landscape
     // parts will be darkenend)
     if (depth > 1)
-        return 0;
+        return 1;
     else
         // And apply
         return lerp(1, ShadowColor, resultDepth);

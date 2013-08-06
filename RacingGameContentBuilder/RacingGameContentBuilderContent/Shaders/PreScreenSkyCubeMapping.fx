@@ -69,7 +69,7 @@ technique SkyCubeMap
 {
     pass P0
     {
-        VertexShader = compile vs_2_0 VS_SkyCubeMap();
+        VertexShader = compile vs_1_1 VS_SkyCubeMap();
         PixelShader  = compile ps_2_0 PS_SkyCubeMap();
     }
 }
