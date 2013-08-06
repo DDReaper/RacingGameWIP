@@ -34,13 +34,9 @@ namespace RacingGame.Helpers
         /// </summary>
         /// <param name="relativeFilename">Relative filename</param>
         /// <returns>File stream</returns>
-        public static FileStream LoadGameContentFile(string relativeFilename)
+        public static Stream LoadGameContentFile(string relativeFilename)
         {
-            if (File.Exists(relativeFilename) == false)
-                return null;
-            else
-                return File.Open(relativeFilename,
-                    FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            return TitleContainer.OpenStream(relativeFilename);
         }
         #endregion
 
@@ -74,15 +70,11 @@ namespace RacingGame.Helpers
                     {
                         return null;
                     }
-                    IAsyncResult async = 
-                        Guide.BeginShowStorageDeviceSelector(null, null);
-                    while (!async.IsCompleted)
-                    {
-                        Thread.Sleep(10);
-                        BaseGame.graphicsManager.GraphicsDevice.Clear(Color.Black);
-                        BaseGame.graphicsManager.GraphicsDevice.Present();
-                    }
-                    xnaUserDevice = Guide.EndShowStorageDeviceSelector(async);
+                    IAsyncResult async = StorageDevice.BeginShowSelector(PlayerIndex.One, null, null);
+
+                    async.AsyncWaitHandle.WaitOne();
+
+                    xnaUserDevice = StorageDevice.EndShowSelector(async);
 #if XBOX360
                     if (!Guide.IsVisible)
                     {

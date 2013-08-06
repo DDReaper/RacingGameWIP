@@ -27,10 +27,9 @@ namespace RacingGame.Helpers
         /// We can use this to relocate the whole game directory to another
         /// location. Used for testing (everything is stored on a network drive).
         /// </summary>
-        public static readonly string GameBaseDirectory = "";
+        public static readonly string GameBaseDirectory =
             // Update to support Xbox360:
-            //StorageContainer.TitleLocation;
-        //"";
+            "";
         #endregion
 
         #region Directories
@@ -55,7 +54,7 @@ namespace RacingGame.Helpers
         {
             get
             {
-                return Path.Combine(GameBaseDirectory, "Content\\Audio");
+                return Path.Combine(GameBaseDirectory, "Content", "Audio");
             }
         }
 
