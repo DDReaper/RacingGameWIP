@@ -274,7 +274,8 @@ namespace RacingGame.GameScreens
         public bool Render()
         {
             // This starts both menu and in game post screen shader!
-            BaseGame.UI.PostScreenMenuShader.Start();
+            if (BaseGame.UI.PostScreenMenuShader != null)
+                BaseGame.UI.PostScreenMenuShader.Start();
 
             // Render background
             BaseGame.UI.RenderMenuBackground();

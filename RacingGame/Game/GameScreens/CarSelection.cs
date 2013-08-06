@@ -142,7 +142,8 @@ namespace RacingGame.GameScreens
             // This starts both menu and in game post screen shader!
             // It will render into the sceneMap texture which we will use
             // later then.
-            BaseGame.UI.PostScreenMenuShader.Start();
+            if (BaseGame.UI.PostScreenMenuShader != null)
+                BaseGame.UI.PostScreenMenuShader.Start();
 
             // Render background and black bar
             BaseGame.UI.RenderMenuBackground();
@@ -155,8 +156,8 @@ namespace RacingGame.GameScreens
             //SpriteHelper.DrawAllSprites();
 
             // Restart the sprites after the paint
-            Texture.additiveSprite.Begin(SpriteSortMode.Immediate, BlendState.Additive);
-            Texture.alphaSprite.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            Texture.additiveSprite.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+            Texture.alphaSprite.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
             // Cars header
             int posX = 10;

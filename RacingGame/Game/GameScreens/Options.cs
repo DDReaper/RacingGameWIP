@@ -107,7 +107,8 @@ namespace RacingGame.GameScreens
         {
             #region Background
             // This starts both menu and in game post screen shader!
-            BaseGame.UI.PostScreenMenuShader.Start();
+            if (BaseGame.UI.PostScreenMenuShader != null)
+                BaseGame.UI.PostScreenMenuShader.Start();
 
             // Render background and black bar
             BaseGame.UI.RenderMenuBackground();
@@ -152,7 +153,7 @@ namespace RacingGame.GameScreens
             if (currentResolution == 0)
                 BaseGame.UI.OptionsScreen.RenderOnScreen(
                     res0Rect, Resolution640x480GfxRect,
-                    selColor, SpriteBlendMode.AlphaBlend);
+                    selColor, BlendState.AlphaBlend);
             if (inRes0Rect && Input.MouseLeftButtonJustPressed)
             {
                 Sound.Play(Sound.Sounds.ButtonClick);
@@ -166,7 +167,7 @@ namespace RacingGame.GameScreens
             if (currentResolution == 1)
                 BaseGame.UI.OptionsScreen.RenderOnScreen(
                     res1Rect, Resolution800x600GfxRect,
-                    selColor, SpriteBlendMode.AlphaBlend);
+                    selColor, BlendState.AlphaBlend);
             if (inRes1Rect && Input.MouseLeftButtonJustPressed)
             {
                 Sound.Play(Sound.Sounds.ButtonClick);
@@ -180,7 +181,7 @@ namespace RacingGame.GameScreens
             if (currentResolution == 2)
                 BaseGame.UI.OptionsScreen.RenderOnScreen(
                     res2Rect, Resolution1024x768GfxRect,
-                    selColor, SpriteBlendMode.AlphaBlend);
+                    selColor, BlendState.AlphaBlend);
             if (inRes2Rect && Input.MouseLeftButtonJustPressed)
             {
                 Sound.Play(Sound.Sounds.ButtonClick);
@@ -194,7 +195,7 @@ namespace RacingGame.GameScreens
             if (currentResolution == 3)
                 BaseGame.UI.OptionsScreen.RenderOnScreen(
                     res3Rect, Resolution1280x1024GfxRect,
-                    selColor, SpriteBlendMode.AlphaBlend);
+                    selColor, BlendState.AlphaBlend);
             if (inRes3Rect && Input.MouseLeftButtonJustPressed)
             {
                 Sound.Play(Sound.Sounds.ButtonClick);
@@ -208,7 +209,7 @@ namespace RacingGame.GameScreens
             if (currentResolution == 4)
                 BaseGame.UI.OptionsScreen.RenderOnScreen(
                     res4Rect, ResolutionAutoGfxRect,
-                    selColor, SpriteBlendMode.AlphaBlend);
+                    selColor, BlendState.AlphaBlend);
             if (inRes4Rect && Input.MouseLeftButtonJustPressed)
             {
                 Sound.Play(Sound.Sounds.ButtonClick);
@@ -225,7 +226,7 @@ namespace RacingGame.GameScreens
             if (fullscreen)
                 BaseGame.UI.OptionsScreen.RenderOnScreen(
                     fsRect, FullscreenGfxRect,
-                    selColor, SpriteBlendMode.AlphaBlend);
+                    selColor, BlendState.AlphaBlend);
             if (inFsRect && Input.MouseLeftButtonJustPressed)
             {
                 Sound.Play(Sound.Sounds.ButtonClick);
@@ -239,7 +240,7 @@ namespace RacingGame.GameScreens
             if (usePostScreenShaders)
                 BaseGame.UI.OptionsScreen.RenderOnScreen(
                     pseRect, PostScreenEffectsGfxRect,
-                    selColor, SpriteBlendMode.AlphaBlend);
+                    selColor, BlendState.AlphaBlend);
             if (inPseRect && Input.MouseLeftButtonJustPressed)
             {
                 Sound.Play(Sound.Sounds.ButtonClick);
@@ -253,7 +254,7 @@ namespace RacingGame.GameScreens
             if (useShadowMapping)
                 BaseGame.UI.OptionsScreen.RenderOnScreen(
                     smRect, ShadowsGfxRect,
-                    selColor, SpriteBlendMode.AlphaBlend);
+                    selColor, BlendState.AlphaBlend);
             if (inSmRect && Input.MouseLeftButtonJustPressed)
             {
                 Sound.Play(Sound.Sounds.ButtonClick);
@@ -267,7 +268,7 @@ namespace RacingGame.GameScreens
             if (useHighDetail)
                 BaseGame.UI.OptionsScreen.RenderOnScreen(
                     hdRect, HighDetailGfxRect,
-                    selColor, SpriteBlendMode.AlphaBlend);
+                    selColor, BlendState.AlphaBlend);
             if (inHdRect && Input.MouseLeftButtonJustPressed)
             {
                 Sound.Play(Sound.Sounds.ButtonClick);
@@ -365,7 +366,9 @@ namespace RacingGame.GameScreens
                 gfxRect);
             #endregion
 
+#if WINDOWS
             Sound.SetVolumes(currentSoundVolume, currentMusicVolume);
+#endif
 
             #region Controller sensitivity
             Rectangle sensitivityRect = BaseGame.CalcRectangleKeep4To3(
