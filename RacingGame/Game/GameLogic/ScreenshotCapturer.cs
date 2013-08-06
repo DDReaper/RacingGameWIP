@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Xna.Framework.Storage;
 using RacingGame.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -58,9 +59,15 @@ namespace RacingGame.GameLogic
         /// <returns>String</returns>
         private string ScreenshotNameBuilder(int num)
         {
+#if WINDOWS
             return Directories.ScreenshotsDirectory + "\\" +
                 game.Window.Title + " Screenshot " +
                 num.ToString("0000") + ".jpg";
+#else
+			return Directories.ScreenshotsDirectory + "/" +
+				 "Screenshot " +
+					num.ToString("0000") + ".jpg";
+#endif
         }
         #endregion
 
@@ -141,24 +148,40 @@ namespace RacingGame.GameLogic
                 if (Directory.Exists(Directories.ScreenshotsDirectory) == false)
                     Directory.CreateDirectory(Directories.ScreenshotsDirectory);
 
-                // fix
-                //using (Texture2D dstTexture = new Texture2D(
-                //    BaseGame.Device,
-                //    BaseGame.Width, BaseGame.Height, 1,
-                //    ResourceUsage.ResolveTarget,
-                //    SurfaceFormat.Color,
-                //    ResourceManagementMode.Manual))
-                using (RenderTarget2D dstTexture = new RenderTarget2D(
-                    BaseGame.Device,
-                    BaseGame.Width, BaseGame.Height, true,
-                    SurfaceFormat.Color, DepthFormat.None))
-                {
-                    // Get data with help of the resolve method
-                    BaseGame.Device.SetRenderTarget(dstTexture);
+                int width = BaseGame.Device.PresentationParameters.BackBufferWidth;
+                int height = BaseGame.Device.PresentationParameters.BackBufferHeight;
 
-                    //dstTexture.Save(
-                    //    ScreenshotNameBuilder(screenshotNum),
-                    //    ImageFileFormat.Jpg);
+                using (
+                    var tex = new Texture2D(BaseGame.Device, width, height, false,
+                                            BaseGame.Device.PresentationParameters.BackBufferFormat))
+                {
+                    int[] backbuffer = new int[width*height];
+#if WINDOWS
+					// TODO !!!
+                    BaseGame.Device.GetBackBufferData(backbuffer);
+#endif
+
+                    tex.SetData(backbuffer);
+
+                    FileHelper.StorageContainerMRE.WaitOne();
+                    FileHelper.StorageContainerMRE.Reset();
+                    // Open a storage container
+                    StorageDevice storageDevice = FileHelper.XnaUserDevice;
+                    if ((storageDevice != null) && storageDevice.IsConnected)
+                    {
+                        IAsyncResult async = storageDevice.BeginOpenContainer("RacingGame", null, null);
+
+                        async.AsyncWaitHandle.WaitOne();
+
+                        using (StorageContainer container = storageDevice.EndOpenContainer(async))
+                        {
+                            async.AsyncWaitHandle.Close();
+                            using (Stream stream = container.CreateFile(ScreenshotNameBuilder(screenshotNum)))
+                            {
+                                tex.SaveAsJpeg(stream, width, height);
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -166,6 +189,7 @@ namespace RacingGame.GameLogic
                 Log.Write("Failed to save Screenshot: " + ex.ToString());
             }
         }
+
         #endregion
 
         #region Update

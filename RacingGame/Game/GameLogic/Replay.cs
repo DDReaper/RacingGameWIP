@@ -214,7 +214,9 @@ namespace RacingGame.GameLogic
             }
             catch (Exception exc)
             {
+#if WINDOWS
                 System.Diagnostics.Trace.WriteLine("Settings Load Failure: " + exc.ToString());
+#endif
             }
 
             FileHelper.StorageContainerMRE.Set();
@@ -223,7 +225,7 @@ namespace RacingGame.GameLogic
             if (!replayFileFound && File.Exists(Path.Combine(
                 Directories.ContentDirectory, ReplayFilenames[trackNum])))
             {
-                using (FileStream stream = FileHelper.LoadGameContentFile(
+                using (Stream stream = TitleContainer.OpenStream(
                     "Content\\" + ReplayFilenames[trackNum]))
                 {
                     using (BinaryReader reader = new BinaryReader(stream))
@@ -355,7 +357,9 @@ namespace RacingGame.GameLogic
             }
             catch (Exception exc)
             {
+#if WINDOWS
                 System.Diagnostics.Trace.WriteLine("Settings Load Failure: " + exc.ToString());
+#endif
             }
 
             FileHelper.StorageContainerMRE.Set();
