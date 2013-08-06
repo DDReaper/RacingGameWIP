@@ -1131,14 +1131,17 @@ namespace RacingGame.Tracks
         public void Render()
         {
             // We use tangent vertices for everything here
-            //BaseGame.Device.VertexDeclaration = TangentVertex.VertexDeclaration;
+
             // Restore the world matrix
             BaseGame.WorldMatrix = Matrix.Identity;
 
             // Make sure Anisotropic filtering is enabled for the road
-            BaseGame.Device.SamplerStates[0].Filter = TextureFilter.Anisotropic;
+            BaseGame.Device.SamplerStates[0] = SamplerState.AnisotropicWrap;
+            //BaseGame.Device.SamplerStates[0].MinFilter = TextureFilter.Anisotropic;
+            //BaseGame.Device.SamplerStates[0].MagFilter = TextureFilter.Anisotropic;
 
-            BaseGame.Device.SamplerStates[0].MaxAnisotropy = 8; // 8 is enough, isn't it?
+            //BaseGame.Device.SamplerStates[0].MipFilter = TextureFilter.Linear;
+            //BaseGame.Device.SamplerStates[0].MaxAnisotropy = 8; // 8 is enough, isn't it?
 
             // Render the road itself
             ShaderEffect.normalMapping.Render(
@@ -1208,7 +1211,7 @@ namespace RacingGame.Tracks
                 return;
 
             // Disable culling (render tunnel from both sides)
-            BaseGame.Device.RasterizerState.CullMode = CullMode.None;
+            BaseGame.Device.RasterizerState = RasterizerState.CullNone;
 
             // Render vertices
             BaseGame.Device.SetVertexBuffer(roadTunnelVb);
@@ -1218,8 +1221,7 @@ namespace RacingGame.Tracks
                 0, roadTunnelIndices.Length / 3);
 
             // Restore culling (default is always counter clockwise)
-            BaseGame.Device.RasterizerState.CullMode =
-                CullMode.CullCounterClockwiseFace;
+            BaseGame.Device.RasterizerState = RasterizerState.CullCounterClockwise;
         }
         #endregion
 
@@ -1233,11 +1235,10 @@ namespace RacingGame.Tracks
             ShaderEffect.shadowMapping.UpdateGenerateShadowWorldMatrix(
                 Matrix.Identity);
             // We use tangent vertices for everything here
-            //BaseGame.Device.VertexDeclaration = TangentVertex.VertexDeclaration;
 
             // Disable culling (render road and tunnel from both sides,
             // this gives correct shadows to loopings, tunnels and overlappings)
-            BaseGame.Device.RasterizerState.CullMode = CullMode.None;
+            BaseGame.Device.RasterizerState = RasterizerState.CullNone;
 
             // Render road and tunnels
             RenderRoadVertices();

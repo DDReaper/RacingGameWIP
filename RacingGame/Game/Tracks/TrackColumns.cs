@@ -344,7 +344,7 @@ namespace RacingGame.Tracks
         public void Render(Material columnMaterial)
         {
             // We use tangent vertices for everything here
-            //BaseGame.Device.VertexDeclaration = TangentVertex.VertexDeclaration;
+
             // Restore the world matrix
             BaseGame.WorldMatrix = Matrix.Identity;
 
