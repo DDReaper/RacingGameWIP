@@ -151,17 +151,56 @@ namespace RacingGame.Graphics
         #region Generate vertex declaration
         /// <summary>
         /// Vertex elements for Mesh.Clone
+        /// </summary>
+        private static readonly VertexElement[] VertexElements =
+            GenerateVertexElements();
 
         /// <summary>
         /// Vertex declaration for vertex buffers.
         /// </summary>
-         public readonly static VertexDeclaration VertexDeclaration = new VertexDeclaration
-(
-    new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
-    new VertexElement(12, VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0),
-    new VertexElement(20, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0),
-    new VertexElement(32, VertexElementFormat.Vector3, VertexElementUsage.Tangent, 0)
-);
+        public static readonly VertexDeclaration VertexDeclaration = new VertexDeclaration
+            (
+            // Construct new vertex declaration with tangent info
+            // First the normal stuff (we should already have that)
+            new VertexElement(0, VertexElementFormat.Vector3,
+                              VertexElementUsage.Position, 0),
+            new VertexElement(12, VertexElementFormat.Vector2,
+                              VertexElementUsage.TextureCoordinate, 0),
+            new VertexElement(20, VertexElementFormat.Vector3,
+                              VertexElementUsage.Normal, 0),
+            // And now the tangent
+            new VertexElement(32, VertexElementFormat.Vector3,
+                              VertexElementUsage.Tangent, 0)
+            );
+
+        //Implement the IVertexType interface so that we can get the vertex
+        //declaration straight from our custom vertex!
+        VertexDeclaration IVertexType.VertexDeclaration
+        {
+            get { return VertexDeclaration; }
+        }
+
+        /// <summary>
+        /// Generate vertex declaration
+        /// </summary>
+        private static VertexElement[] GenerateVertexElements()
+        {
+            VertexElement[] decl = new VertexElement[]
+                {
+                    // Construct new vertex declaration with tangent info
+                    // First the normal stuff (we should already have that)
+                    new VertexElement(0, VertexElementFormat.Vector3,
+                        VertexElementUsage.Position, 0),
+                    new VertexElement(12, VertexElementFormat.Vector2,
+                        VertexElementUsage.TextureCoordinate, 0),
+                    new VertexElement(20, VertexElementFormat.Vector3,
+                        VertexElementUsage.Normal, 0),
+                    // And now the tangent
+                    new VertexElement(32, VertexElementFormat.Vector3,
+                        VertexElementUsage.Tangent, 0),
+                };
+            return decl;
+        }
         #endregion
 
         #region Is declaration tangent vertex declaration
@@ -183,10 +222,5 @@ namespace RacingGame.Graphics
                 declaration[3].VertexElementUsage == VertexElementUsage.Tangent;
         }
         #endregion
-
-        VertexDeclaration IVertexType.VertexDeclaration
-        {
-            get { return VertexDeclaration; }
-        }
     }
 }

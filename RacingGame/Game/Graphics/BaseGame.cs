@@ -329,7 +329,11 @@ namespace RacingGame.Graphics
 #else
             graphicsManager.PreferredBackBufferWidth = resolutionWidth;
             graphicsManager.PreferredBackBufferHeight = resolutionHeight;
+#if DEBUG
+            graphicsManager.IsFullScreen = false;
+#else
             graphicsManager.IsFullScreen = GameSettings.Default.Fullscreen;
+#endif
 
             mustApplyDeviceChanges = true;
 #endif
@@ -937,7 +941,7 @@ namespace RacingGame.Graphics
             }
             else
             {
-                Device.BlendState = BlendState.Additive;
+                Device.BlendState = BlendState.Opaque;
             }
         }
 
@@ -975,20 +979,32 @@ namespace RacingGame.Graphics
             switch (value)
             {
                 case AlphaMode.DisableAlpha:
-                    Device.BlendState.AlphaSourceBlend = Blend.Zero;
-                    Device.BlendState.AlphaDestinationBlend = Blend.One;
+                    Device.BlendState = new BlendState()
+                    {
+                        AlphaSourceBlend = Blend.Zero,
+                        AlphaDestinationBlend = Blend.One
+                    };
                     break;
                 case AlphaMode.Default:
-                    Device.BlendState.AlphaSourceBlend = Blend.SourceAlpha;
-                    Device.BlendState.AlphaDestinationBlend = Blend.InverseSourceAlpha;
+                    Device.BlendState = new BlendState()
+                    {
+                        AlphaSourceBlend = Blend.SourceAlpha,
+                        AlphaDestinationBlend = Blend.InverseSourceAlpha
+                    };
                     break;
                 case AlphaMode.SourceAlphaOne:
-                    Device.BlendState.AlphaSourceBlend = Blend.SourceAlpha;
-                    Device.BlendState.AlphaDestinationBlend = Blend.One;
+                    Device.BlendState = new BlendState()
+                    {
+                        AlphaSourceBlend = Blend.SourceAlpha,
+                        AlphaDestinationBlend = Blend.One
+                    };
                     break;
                 case AlphaMode.OneOne:
-                    Device.BlendState.AlphaSourceBlend = Blend.One;
-                    Device.BlendState.AlphaDestinationBlend = Blend.One;
+                    Device.BlendState = new BlendState()
+                    {
+                        AlphaSourceBlend = Blend.One,
+                        AlphaDestinationBlend = Blend.One
+                    };
                     break;
             }
         }
@@ -1007,6 +1023,10 @@ namespace RacingGame.Graphics
 
             // Set graphics
             graphicsManager = new GraphicsDeviceManager(this);
+
+            // Set minimum requirements
+            //graphicsManager.MinimumPixelShaderProfile = ShaderProfile.PS_2_0;
+            //graphicsManager.MinimumVertexShaderProfile = ShaderProfile.VS_2_0;
 
             ApplyResolutionChange();
 
@@ -1029,7 +1049,9 @@ namespace RacingGame.Graphics
             base.Content.RootDirectory = String.Empty;
 
             // Update windows title (used for unit testing)
+#if WINDOWS
             this.Window.Title = setWindowsTitle;
+#endif
             remWindowsTitle = setWindowsTitle;
 
             Sound.Initialize();
@@ -1051,6 +1073,20 @@ namespace RacingGame.Graphics
                     e.GraphicsDeviceInformation.PresentationParameters;
 
                 presentParams.RenderTargetUsage = RenderTargetUsage.PlatformContents;
+                if (graphicsManager.PreferredBackBufferHeight == 720)
+                {
+                    presentParams.MultiSampleCount = 4;
+#if !DEBUG
+                    presentParams.PresentationInterval = PresentInterval.One;
+#endif
+                }
+                else
+                {
+                    presentParams.MultiSampleCount = 2;
+#if !DEBUG
+                    presentParams.PresentationInterval = PresentInterval.Two;
+#endif
+                }
             }
         }
 
@@ -1069,8 +1105,10 @@ namespace RacingGame.Graphics
 
             GameSettings.Initialize();
             ApplyResolutionChange();
+#if WINDOWS
             Sound.SetVolumes(GameSettings.Default.SoundVolume, 
                 GameSettings.Default.MusicVolume);
+#endif
             
             //Init the static screens
             Highscores.Initialize();
@@ -1118,12 +1156,12 @@ namespace RacingGame.Graphics
             // Restore z buffer state
             BaseGame.Device.DepthStencilState = DepthStencilState.Default;
             // Set u/v addressing back to wrap
-            BaseGame.Device.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
-            BaseGame.Device.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
+            BaseGame.Device.SamplerStates[0] = SamplerState.LinearWrap;
             // Restore normal alpha blending
             BaseGame.SetCurrentAlphaMode(BaseGame.AlphaMode.Default);
 
-            //// Set 128 and greate alpha compare for Model.Render
+            //TODO: AlphaTestEffect
+            // Set 128 and greate alpha compare for Model.Render
             //BaseGame.Device.RenderState.ReferenceAlpha = 128;
             //BaseGame.Device.RenderState.AlphaFunction = CompareFunction.Greater;
 
@@ -1307,7 +1345,7 @@ namespace RacingGame.Graphics
             base.Update(gameTime);
 
             // Update all input states
-            RacingGame.GameLogic.Input.Update();
+            Input.Update();
 
             lastFrameTotalTimeMs = totalTimeMs;
             elapsedTimeThisFrameInMs =
@@ -1414,8 +1452,8 @@ namespace RacingGame.Graphics
                 ClearBackground();
 
                 // Get our sprites ready to draw...
-                Texture.additiveSprite.Begin(SpriteSortMode.Immediate, BlendState.Additive);
-                Texture.alphaSprite.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                Texture.additiveSprite.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+                Texture.alphaSprite.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
                 // Handle custom user render code
                 Render();
@@ -1435,7 +1473,7 @@ namespace RacingGame.Graphics
                 //Handle drawing the Trophy
                 if (RacingGameManager.InGame && RacingGameManager.Player.Victory)
                 {
-                    Texture.alphaSprite.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                    Texture.alphaSprite.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
                     int rank = GameScreens.Highscores.GetRankFromCurrentTime(
                         RacingGameManager.Player.LevelNum,

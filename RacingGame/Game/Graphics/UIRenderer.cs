@@ -10,7 +10,7 @@
 #region Using directives
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-//using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -265,7 +265,7 @@ namespace RacingGame.Graphics
         {
             get
             {
-                return skyCube.SkyCubeMapTexture;
+                return  skyCube != null ? skyCube.SkyCubeMapTexture : null;
             }
         }
         #endregion
@@ -276,26 +276,26 @@ namespace RacingGame.Graphics
         /// </summary>
         public UIRenderer()
         {
-            background = new Texture("background.png");
-            buttons = new Texture("buttons.png");
-            headers = new Texture("headers.png");
+            background = new Texture("background");
+            buttons = new Texture("buttons");
+            headers = new Texture("headers");
 #if XBOX360
             helpScreen = new Texture("HelpScreenXbox360.png");
             optionsScreen = new Texture("OptionsScreenXbox360.png");
 #else
-            helpScreen = new Texture("HelpScreenWindows.png");
-            optionsScreen = new Texture("OptionsScreenWindows.png");
+            helpScreen = new Texture("HelpScreenWindows");
+            optionsScreen = new Texture("OptionsScreenWindows");
 #endif
-            mouseCursor = new Texture("MouseCursor.png");
-            ingame = new Texture("Ingame.png");
+            mouseCursor = new Texture("MouseCursor");
+            ingame = new Texture("ingame");
             trophies[0] = new Texture("pokal1");
             trophies[1] = new Texture("pokal2");
             trophies[2] = new Texture("pokal3");
             font = new TextureFont();
 
-            postScreenMenuShader = new PostScreenMenu();
-            postScreenGameShader = new PostScreenGlow();
-            skyCube = new PreScreenSkyCubeMapping();
+            // TODO postScreenMenuShader = new PostScreenMenu();
+            // TODO postScreenGameShader = new PostScreenGlow();
+            // TODO skyCube = new PreScreenSkyCubeMapping();
             lensFlare = new LensFlare(LensFlare.DefaultSunPos);
             BaseGame.LightDirection = LensFlare.DefaultLightPos;
         }
@@ -449,7 +449,7 @@ namespace RacingGame.Graphics
         public void RenderGameBackground()
         {
             // Show game background (sky and lensflare)
-            skyCube.RenderSky();
+            if (skyCube != null) skyCube.RenderSky();
 
             // Render lens flare on top of 3d stuff
             if (Track.disableLensFlareInTunnel == false)
@@ -886,10 +886,6 @@ namespace RacingGame.Graphics
             // Disable depth buffer for UI
             BaseGame.Device.DepthStencilState = DepthStencilState.None;
 
-            // Overwrite the vertex declaration to make sure we don't use
-            // the old format anymore.
-            //BaseGame.Device.VertexDeclaration = TangentVertex.VertexDeclaration;
-
             // Draw all sprites
             Texture.additiveSprite.End();
             Texture.alphaSprite.End();
@@ -897,6 +893,9 @@ namespace RacingGame.Graphics
 
             // Render all 2d lines
             lineManager2D.Render();
+
+            // Restore depth buffer?
+            BaseGame.Device.DepthStencilState = DepthStencilState.Default;
         }
 
         /// <summary>
@@ -909,7 +908,7 @@ namespace RacingGame.Graphics
             // Show fps
             if (Input.KeyboardF1JustPressed ||
                 // Also allow toggeling with gamepad
-                (Input.GamePad.Buttons.LeftShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed &&
+                (Input.GamePad.Buttons.LeftShoulder == ButtonState.Pressed &&
                 Input.GamePadYJustPressed))
                 showFps = !showFps;
 #endif
@@ -929,8 +928,8 @@ namespace RacingGame.Graphics
                 // Also don't show cursor in game!
                 RacingGameManager.ShowMouseCursor)
             {
-                Texture.alphaSprite.Begin(SpriteSortMode.Immediate, BlendState.Additive);
-                Texture.additiveSprite.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                Texture.alphaSprite.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+                Texture.additiveSprite.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
                 // Use our SpriteHelper logic to render the mouse cursor now!
                 mouseCursor.RenderOnScreen(Input.MousePos);

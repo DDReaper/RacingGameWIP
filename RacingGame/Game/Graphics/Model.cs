@@ -167,7 +167,7 @@ namespace RacingGame.Graphics
             name = setModelName;
 
             xnaModel = BaseGame.Content.Load<XnaModel>(
-                @"Content\models\" + name);
+                @"Content\Models\" + name);
 
             // Get matrix transformations of the model
             // Has to be done only once because we don't use animations in our game.
@@ -521,20 +521,17 @@ namespace RacingGame.Graphics
                             // just use the original shaders for the model)
                             for (int partNum = 0; partNum < mesh.MeshParts.Count; partNum++)
                             {
-                                mesh.Draw();
-                                //ModelMeshPart part = mesh.MeshParts[partNum];
-                                //// Make sure vertex declaration is correct
-                                ////BaseGame.Device.VertexDeclaration =
-                                ////    part.VertexDeclaration;
-                                //// Set vertex buffer and index buffer
-                                //BaseGame.Device.SetVertexBuffer(mesh.VertexBuffer);
-                                //BaseGame.Device.Indices = mesh.IndexBuffer;
+                                ModelMeshPart part = mesh.MeshParts[partNum];
+                                // Make sure vertex declaration is correct
+                                // Set vertex buffer and index buffer
+                                BaseGame.Device.SetVertexBuffer(part.VertexBuffer);
+                                BaseGame.Device.Indices = part.IndexBuffer;
 
-                                //// And render all primitives
-                                //BaseGame.Device.DrawIndexedPrimitives(
-                                //    PrimitiveType.TriangleList,
-                                //    part.BaseVertex, 0, part.NumVertices,
-                                //    part.StartIndex, part.PrimitiveCount);
+                                // And render all primitives
+                                BaseGame.Device.DrawIndexedPrimitives(
+                                    PrimitiveType.TriangleList,
+                                    part.VertexOffset, 0, part.NumVertices,
+                                    part.StartIndex, part.PrimitiveCount);
                             }
                         }
                     });
@@ -725,14 +722,11 @@ namespace RacingGame.Graphics
                     // Render just the vertices, do not use the shaders of our model.
                     // This is the same code as ModelMeshPart.Draw() uses, but
                     // this method is internal and can't be used by us :(
-                    //BaseGame.Device.VertexDeclaration = part.VertexDeclaration;
-                    //BaseGame.Device.Vertices[0].SetSource(
-                    //    mesh.VertexBuffer, part.StreamOffset, part.VertexStride);
                     BaseGame.Device.SetVertexBuffer(part.VertexBuffer);
                     BaseGame.Device.Indices = part.IndexBuffer;
                     BaseGame.Device.DrawIndexedPrimitives(
                         PrimitiveType.TriangleList,
-                        0, 0,
+                        part.VertexOffset, 0,
                         part.NumVertices, part.StartIndex, part.PrimitiveCount);
                 }
             }
@@ -792,23 +786,20 @@ namespace RacingGame.Graphics
                         transforms[mesh.ParentBone.Index] *
                         renderMatrix);
                 }
-                mesh.Draw();
-                //for (int partNum = 0; partNum < mesh.MeshParts.Count; partNum++)
-                //{
-                //    ModelMeshPart part = mesh.MeshParts[partNum];
-                    
-                //    // Render just the vertices, do not use the shaders of our model.
-                //    // This is the same code as ModelMeshPart.Draw() uses, but
-                //    // this method is internal and can't be used by us :(
-                //    BaseGame.Device.VertexDeclaration = part.VertexDeclaration;
-                //    BaseGame.Device.Vertices[0].SetSource(
-                //        mesh.VertexBuffer, part.StreamOffset, part.VertexStride);
-                //    BaseGame.Device.Indices = mesh.IndexBuffer;
-                //    BaseGame.Device.DrawIndexedPrimitives(
-                //        PrimitiveType.TriangleList,
-                //        part.BaseVertex, 0,
-                //        part.NumVertices, part.StartIndex, part.PrimitiveCount);
-                //}
+
+                for (int partNum = 0; partNum < mesh.MeshParts.Count; partNum++)
+                {
+                    ModelMeshPart part = mesh.MeshParts[partNum];
+                    // Render just the vertices, do not use the shaders of our model.
+                    // This is the same code as ModelMeshPart.Draw() uses, but
+                    // this method is internal and can't be used by us :(
+                    BaseGame.Device.SetVertexBuffer(part.VertexBuffer);
+                    BaseGame.Device.Indices = part.IndexBuffer;
+                    BaseGame.Device.DrawIndexedPrimitives(
+                        PrimitiveType.TriangleList,
+                        part.VertexOffset, 0,
+                        part.NumVertices, part.StartIndex, part.PrimitiveCount);
+                }
             }
         }
         #endregion

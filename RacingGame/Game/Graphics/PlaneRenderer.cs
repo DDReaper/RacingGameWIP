@@ -85,7 +85,7 @@ namespace RacingGame.Graphics
             };
 
             // Draw the plane (just 2 simple triangles)
-            BaseGame.Device.DrawUserPrimitives<TangentVertex>(
+            BaseGame.Device.DrawUserPrimitives(
                 PrimitiveType.TriangleStrip, vertices, 0, 2);
         }
 
@@ -95,7 +95,6 @@ namespace RacingGame.Graphics
         public void Render()
         {
             BaseGame.WorldMatrix = Matrix.CreateTranslation(pos);
-            //BaseGame.Device.VertexDeclaration = TangentVertex.VertexDeclaration;
             ShaderEffect.normalMapping.Render(
                 material,
                 "DiffuseSpecular20",

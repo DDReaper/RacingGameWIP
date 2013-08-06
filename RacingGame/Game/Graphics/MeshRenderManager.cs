@@ -80,16 +80,12 @@ namespace RacingGame.Graphics
             /// World parameter
             /// </summary>
             public EffectParameter worldParameter;
-            /// <summary>
-            /// Vertex declaration
-            /// </summary>
-            public VertexDeclaration vertexDeclaration;
+
             /// <summary>
             /// Stream offset, vertex stride, etc.
             /// All parameters we need for rendering.
             /// </summary>
-            public int streamOffset, vertexStride, baseVertex,
-                numVertices, startIndex, primitiveCount;
+            public int baseVertex, numVertices, startIndex, primitiveCount;
 
             /// <summary>
             /// List of render matrices we use every frame. At creation time
@@ -110,15 +106,25 @@ namespace RacingGame.Graphics
             /// <param name="setMaterial">Set material</param>
             /// <param name="setUsedTechnique">Set used technique</param>
             /// <param name="setWorldParameter">Set world parameter</param>
+            /// <param name="setBaseVertex">Set base vertex</param>
+            /// <param name="setNumVertices">Set number vertices</param>
+            /// <param name="setStartIndex">Set start index</param>
+            /// <param name="setPrimitiveCount">Set primitive count</param>
             public RenderableMesh(VertexBuffer setVertexBuffer,
                 IndexBuffer setIndexBuffer, Material setMaterial,
-                EffectTechnique setUsedTechnique, EffectParameter setWorldParameter)
+                EffectTechnique setUsedTechnique, EffectParameter setWorldParameter,
+                int setBaseVertex,
+                int setNumVertices, int setStartIndex, int setPrimitiveCount)
             {
                 vertexBuffer = setVertexBuffer;
                 indexBuffer = setIndexBuffer;
                 material = setMaterial;
                 usedTechnique = setUsedTechnique;
                 worldParameter = setWorldParameter;
+                baseVertex = setBaseVertex;
+                numVertices = setNumVertices;
+                startIndex = setStartIndex;
+                primitiveCount = setPrimitiveCount;
             }
             #endregion
 
@@ -132,7 +138,7 @@ namespace RacingGame.Graphics
             {
                 // Update world matrix
                 ShaderEffect.normalMapping.WorldMatrix = worldMatrix;
-                //ShaderEffect.normalMapping.Effect.CommitChanges();//.Update();
+                ShaderEffect.normalMapping.Effect.CurrentTechnique.Passes[0].Apply();//.Update();
 
                 // Set vertex buffer and index buffer
                 if (lastVertexBufferSet != vertexBuffer ||
@@ -140,7 +146,7 @@ namespace RacingGame.Graphics
                 {
                     lastVertexBufferSet = vertexBuffer;
                     lastIndexBufferSet = indexBuffer;
-                    BaseGame.Device.SetVertexBuffer(vertexBuffer);
+                    BaseGame.Device.SetVertexBuffer( vertexBuffer);
                     BaseGame.Device.Indices = indexBuffer;
                 }
 
@@ -245,16 +251,16 @@ namespace RacingGame.Graphics
                 ShaderEffect.normalMapping.SetParametersOptimized(material);
                 // Set vertex declaration
                 //always true: if (meshes.Count > 0)
-                //BaseGame.Device.VertexDeclaration = meshes[0].vertexDeclaration;
 
                 // Enable alpha if this material uses alpha
                 if (material.HasAlpha)
                 {
-                    BaseGame.Device.BlendState = BlendState.AlphaBlend;
-                    //(SJ) May have to change to alphatesteffect
+                    //TODO: AlphaTestEffect
+                    //BaseGame.Device.RenderState.AlphaTestEnable = true;
                     //BaseGame.Device.RenderState.ReferenceAlpha = 128;
+
                     // Make 2sided, we use alpha mainly for our palms.
-                    BaseGame.Device.RasterizerState.CullMode = CullMode.None;
+                    BaseGame.Device.RasterizerState = RasterizerState.CullNone;
                 }
                 // Render all meshes that use this material.
                 for (int meshNum = 0; meshNum < meshes.Count; meshNum++)
@@ -267,9 +273,9 @@ namespace RacingGame.Graphics
                 // Disable alpha testing again and restore culling
                 if (material.HasAlpha)
                 {
-                    BaseGame.Device.BlendState = BlendState.Opaque;
-                    BaseGame.Device.RasterizerState.CullMode =
-                        CullMode.CullCounterClockwiseFace;
+                    //TODO: AlphaTestEffect
+                    //BaseGame.Device.RenderState.AlphaTestEnable = false;
+                    BaseGame.Device.RasterizerState = RasterizerState.CullCounterClockwise;
                 }
             }
             #endregion
@@ -365,24 +371,18 @@ namespace RacingGame.Graphics
             {
                 // Start effect for this technique
                 effect.CurrentTechnique = technique;
-                try
-                {
 
-                    // Render all pass (we always just have one)
-                    effect.CurrentTechnique.Passes[0].Apply();
 
-                    // Render all meshes sorted by all materials.
-                    for (int listNum = 0; listNum < meshesPerMaterials.Count; listNum++)
-                    {
-                        MeshesPerMaterial list = meshesPerMaterials[listNum];
-                        if (list.NumberOfRenderMatrices > 0)
-                            list.Render();
-                    }
-                }
-                finally
+                // Render all pass (we always just have one)
+                EffectPass pass = effect.CurrentTechnique.Passes[0];
+
+                pass.Apply();
+                // Render all meshes sorted by all materials.
+                for (int listNum = 0; listNum < meshesPerMaterials.Count; listNum++)
                 {
-                    // End shader
-                    //effect.End();
+                    MeshesPerMaterial list = meshesPerMaterials[listNum];
+                    if (list.NumberOfRenderMatrices > 0)
+                        list.Render();
                 }
             }
             #endregion
@@ -469,7 +469,8 @@ namespace RacingGame.Graphics
             // Build new RenderableMesh object
             RenderableMesh mesh = new RenderableMesh(
                 vertexBuffer, indexBuffer, material, foundList.technique,
-                ShaderEffect.normalMapping.WorldParameter);
+                ShaderEffect.normalMapping.WorldParameter, part.VertexOffset,
+                part.NumVertices, part.StartIndex, part.PrimitiveCount);
             foundList.Add(mesh);
             return mesh;
         }

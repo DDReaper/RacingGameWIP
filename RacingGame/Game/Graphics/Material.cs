@@ -13,8 +13,8 @@ using System.Collections.Generic;
 using System.Text;
 using RacingGame.Helpers;
 using RacingGame.Shaders;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 #endregion
 
 namespace RacingGame.Graphics
