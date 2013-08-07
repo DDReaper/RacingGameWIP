@@ -55,16 +55,6 @@ Content\Models\Stone5.xnb
 Content\Models\Train.xnb
 Content\Models\Trashcan.xnb
 Content\Models\Windmill.xnb
-Content\Shaders\LandscapeNormalMapping.xnb
-Content\Shaders\LightingShader.xnb
-Content\Shaders\LineRendering.xnb
-Content\Shaders\NormalMapping.xnb
-Content\Shaders\PostScreenGlow.xnb
-Content\Shaders\PostScreenMenu.xnb
-Content\Shaders\PostScreenShadowBlur.xnb
-Content\Shaders\PreScreenSkyCubeMapping.xnb
-Content\Shaders\ReflectionSimpleGlass.xnb
-Content\Shaders\ShadowMap.xnb
 Content\Textures\Ast.xnb
 Content\Textures\Ast_Normal.xnb
 Content\Textures\background.xnb
@@ -307,6 +297,16 @@ Content\textures\garbagecan_0.xnb
 Content\textures\garbagecanNormal_0.xnb
 Content\textures\Windmill_0.xnb
 Content\textures\WindmillNormal_0.xnb
+Content\Shaders\PreScreenSkyCubeMapping.xnb
+Content\Shaders\LandscapeNormalMapping.xnb
+Content\Shaders\LightingShader.xnb
+Content\Shaders\LineRendering.xnb
+Content\Shaders\NormalMapping.xnb
+Content\Shaders\PostScreenGlow.xnb
+Content\Shaders\PostScreenMenu.xnb
+Content\Shaders\PostScreenShadowBlur.xnb
+Content\Shaders\ReflectionSimpleGlass.xnb
+Content\Shaders\ShadowMap.xnb
 Content\Audio\RacingGameManager.xgs
 Content\Audio\Wave Bank.xwb
 Content\Audio\Sound Bank.xsb

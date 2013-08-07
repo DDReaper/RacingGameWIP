@@ -9,14 +9,10 @@
 
 #region Using directives
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Storage;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using RacingGame.GameLogic;
 using RacingGame.Helpers;
 using RacingGame.Properties;

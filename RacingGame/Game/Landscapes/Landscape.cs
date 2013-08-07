@@ -835,7 +835,7 @@ namespace RacingGame.Landscapes
         internal Landscape(RacingGameManager.Level setLevel)
         {
             #region Load map height data
-            FileStream file = FileHelper.LoadGameContentFile(
+            Stream file = TitleContainer.OpenStream(
                 "Content\\LandscapeHeights.data");
             byte[] heights = new byte[GridWidth * GridHeight];
             file.Read(heights, 0, GridWidth * GridHeight);
@@ -1104,7 +1104,7 @@ namespace RacingGame.Landscapes
         public void Render()
         {
             // Make sure z buffer is on
-            BaseGame.Device.DepthStencilState = DepthStencilState.None;
+            BaseGame.Device.DepthStencilState = DepthStencilState.Default;
 
             BaseGame.WorldMatrix = Matrix.Identity;
 
@@ -1134,7 +1134,6 @@ namespace RacingGame.Landscapes
         /// </summary>
         private void RenderLandscapeVertices()
         {
-            // BaseGame.Device.VertexDeclaration = TangentVertex.VertexDeclaration;
             BaseGame.Device.SetVertexBuffer(vertexBuffer);
             BaseGame.Device.Indices = indexBuffer;
             BaseGame.Device.DrawIndexedPrimitives(PrimitiveType.TriangleList,

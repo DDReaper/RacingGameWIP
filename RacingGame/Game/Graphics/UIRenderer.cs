@@ -10,7 +10,6 @@
 #region Using directives
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -908,7 +907,7 @@ namespace RacingGame.Graphics
             // Show fps
             if (Input.KeyboardF1JustPressed ||
                 // Also allow toggeling with gamepad
-                (Input.GamePad.Buttons.LeftShoulder == ButtonState.Pressed &&
+                (Input.GamePad.Buttons.LeftShoulder == Microsoft.Xna.Framework.Input.ButtonState.Pressed &&
                 Input.GamePadYJustPressed))
                 showFps = !showFps;
 #endif

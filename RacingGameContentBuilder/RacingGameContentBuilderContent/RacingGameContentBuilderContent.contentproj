@@ -460,76 +460,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Shaders\LandscapeNormalMapping.fx">
-      <Name>LandscapeNormalMapping</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>MGEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Shaders\LightingShader.fx">
-      <Name>LightingShader</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>MGEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Shaders\LineRendering.fx">
-      <Name>LineRendering</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>MGEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Shaders\NormalMapping.fx">
       <Name>NormalMapping</Name>
       <Importer>EffectImporter</Importer>
-      <Processor>MGEffectProcessor</Processor>
+      <Processor>EffectProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Shaders\PostScreenGlow.fx">
-      <Name>PostScreenGlow</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>MGEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Shaders\PostScreenMenu.fx">
-      <Name>PostScreenMenu</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>MGEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Shaders\PostScreenShadowBlur.fx">
-      <Name>PostScreenShadowBlur</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>MGEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Shaders\PreScreenSkyCubeMapping.fx">
-      <Name>PreScreenSkyCubeMapping</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>MGEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Shaders\ReflectionSimpleGlass.fx">
-      <Name>ReflectionSimpleGlass</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>MGEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Shaders\ShadowMap.fx">
-      <Name>ShadowMap</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>MGEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\Ast.tga">
       <Name>Ast</Name>
       <Importer>TextureImporter</Importer>
@@ -1554,6 +1489,55 @@
       <Name>TrackExpert</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Shaders\LandscapeNormalMapping.fx">
+      <Name>LandscapeNormalMapping</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Shaders\LightingShader.fx">
+      <Name>LightingShader</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>MGEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Shaders\LineRendering.fx">
+      <Name>LineRendering</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>MGEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Shaders\PostScreenGlow.fx">
+      <Name>PostScreenGlow</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Shaders\PostScreenMenu.fx">
+      <Name>PostScreenMenu</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Shaders\PostScreenShadowBlur.fx">
+      <Name>PostScreenShadowBlur</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Shaders\ReflectionSimpleGlass.fx">
+      <Name>ReflectionSimpleGlass</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>MGEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Shaders\ShadowMap.fx">
+      <Name>ShadowMap</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Shaders\PreScreenSkyCubeMapping.fx">
+      <Name>PreScreenSkyCubeMapping</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--

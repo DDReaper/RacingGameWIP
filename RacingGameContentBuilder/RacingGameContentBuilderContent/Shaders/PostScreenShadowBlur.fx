@@ -144,7 +144,7 @@ technique ScreenAdvancedBlur
             "Draw=Buffer;";
     >
     {
-        VertexShader = compile vs_1_1 VS_AdvancedBlur(float2(1, 0));
+        VertexShader = compile vs_2_0 VS_AdvancedBlur(float2(1, 0));
         sampler[0] = (sceneMapSampler);
         sampler[1] = (sceneMapSampler);
         sampler[2] = (sceneMapSampler);
@@ -175,7 +175,7 @@ technique ScreenAdvancedBlur
             "Draw=Buffer;";
     >
     {
-        VertexShader = compile vs_1_1 VS_AdvancedBlur(float2(0, 1));
+        VertexShader = compile vs_2_0 VS_AdvancedBlur(float2(0, 1));
         sampler[0] = (blurMapSampler);
         sampler[1] = (blurMapSampler);
         sampler[2] = (blurMapSampler);
@@ -286,7 +286,7 @@ technique ScreenAdvancedBlur20
             "Draw=Buffer;";
     >
     {
-        VertexShader = compile vs_1_1 VS_AdvancedBlur20(float2(1, 0));
+        VertexShader = compile vs_2_0 VS_AdvancedBlur20(float2(1, 0));
         PixelShader  = compile ps_2_0 PS_AdvancedBlur20(sceneMapSampler);
     }
 
@@ -302,7 +302,7 @@ technique ScreenAdvancedBlur20
             "Draw=Buffer;";
     >
     {
-        VertexShader = compile vs_1_1 VS_AdvancedBlur20(float2(0, 1));
+        VertexShader = compile vs_2_0 VS_AdvancedBlur20(float2(0, 1));
         PixelShader  = compile ps_2_0 PS_AdvancedBlur20(blurMapSampler);
     }
 }

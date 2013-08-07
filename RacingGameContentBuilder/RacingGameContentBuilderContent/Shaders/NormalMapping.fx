@@ -246,7 +246,7 @@ technique Diffuse
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_Diffuse();
+        VertexShader = compile vs_2_0 VS_Diffuse();
         sampler[0] = (diffuseTextureSampler);
         sampler[1] = (normalTextureSampler);
         PixelShaderConstant1[0] = <ambientColor>;
@@ -276,7 +276,7 @@ technique Diffuse20
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_Diffuse();
+        VertexShader = compile vs_2_0 VS_Diffuse();
         PixelShader  = compile ps_2_0 PS_Diffuse();
     }
 }
@@ -314,7 +314,7 @@ technique Diffuse20Transparent
         SrcBlend = SrcAlpha;
         DestBlend = InvSrcAlpha;
         
-        VertexShader = compile vs_1_1 VS_Diffuse();
+        VertexShader = compile vs_2_0 VS_Diffuse();
         PixelShader  = compile ps_2_0 PS_Diffuse_Transparent();
     }
 }
@@ -364,7 +364,7 @@ technique Specular
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_Specular();
+        VertexShader = compile vs_2_0 VS_Specular();
         sampler[0] = (diffuseTextureSampler);
         sampler[1] = (normalTextureSampler);
         sampler[2] = (NormalizeCubeTextureSampler);
@@ -483,7 +483,7 @@ technique Specular20
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_Specular20();
+        VertexShader = compile vs_2_0 VS_Specular20();
         PixelShader  = compile ps_2_0 PS_Specular20();
     }
 }
@@ -495,7 +495,7 @@ technique DiffuseSpecular
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_Specular();
+        VertexShader = compile vs_2_0 VS_Specular();
         sampler[0] = (diffuseTextureSampler);
         sampler[1] = (normalTextureSampler);
         sampler[2] = (NormalizeCubeTextureSampler);
@@ -572,7 +572,7 @@ technique DiffuseSpecular20
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_Specular20();
+        VertexShader = compile vs_2_0 VS_Specular20();
         PixelShader  = compile ps_2_0 PS_DiffuseSpecular20();
     }
 }
@@ -629,7 +629,7 @@ technique SpecularWithReflection
     pass P0
     {
         // Use the same as Specular
-        VertexShader = compile vs_1_1 VS_SpecularWithReflection();
+        VertexShader = compile vs_2_0 VS_SpecularWithReflection();
         sampler[0] = (diffuseTextureSampler);
         sampler[1] = (normalTextureSampler);
         sampler[2] = (NormalizeCubeTextureSampler);
@@ -761,7 +761,7 @@ technique SpecularWithReflection20
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_SpecularWithReflection20();
+        VertexShader = compile vs_2_0 VS_SpecularWithReflection20();
         PixelShader  = compile ps_2_0 PS_SpecularWithReflection20();
     }
 }
@@ -841,7 +841,7 @@ technique ReflectionSpecular
         AlphaBlendEnable = true;
         SrcBlend = SrcAlpha;
         DestBlend = InvSrcAlpha;    
-        VertexShader = compile vs_1_1 VS_ReflectionSpecular();
+        VertexShader = compile vs_2_0 VS_ReflectionSpecular();
         PixelShader  = compile ps_2_0 PS_ReflectionSpecular();
     }
 }
@@ -881,7 +881,7 @@ float4 PS_ReflectionSpecular20(VertexOutput20 In) : COLOR
     // Fresnel
     float3 E = -V;
     float facing = 1.0 - max(dot(E, -N), 0);
-    float fresnel = fresnelBias + (1.0-fresnelBias)*pow(facing, fresnelPower);
+    float fresnel = fresnelBias + (1.0-fresnelBias)*pow(abs(facing), fresnelPower);
 
     // Diffuse factor
     float diff = saturate(dot(N, lightDir));
@@ -903,7 +903,7 @@ technique ReflectionSpecular20
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_ReflectionSpecular20();
+        VertexShader = compile vs_2_0 VS_ReflectionSpecular20();
         PixelShader  = compile ps_2_0 PS_ReflectionSpecular20();
     }
 }
@@ -993,7 +993,7 @@ technique SpecularWithReflectionForCar20
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_SpecularWithReflectionForCar20();
+        VertexShader = compile vs_2_0 VS_SpecularWithReflectionForCar20();
         PixelShader  = compile ps_2_0 PS_SpecularWithReflectionForCar20();
     }
 }
@@ -1027,7 +1027,7 @@ technique SpecularRoad
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_Specular();
+        VertexShader = compile vs_2_0 VS_Specular();
         sampler[0] = (diffuseTextureRoadSampler);
         sampler[1] = (normalTextureRoadSampler);
         sampler[2] = (NormalizeCubeTextureSampler);
@@ -1101,7 +1101,7 @@ technique SpecularRoad20
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_Specular20();
+        VertexShader = compile vs_2_0 VS_Specular20();
         PixelShader  = compile ps_2_0 PS_SpecularRoad20();
     }
 }

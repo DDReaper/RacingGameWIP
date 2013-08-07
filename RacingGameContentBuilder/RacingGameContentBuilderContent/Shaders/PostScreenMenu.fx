@@ -406,79 +406,36 @@ float4 PS_ComposeFinalImage20(
 
 // Bloom technique for ps_1_1 (not that powerful, but looks still gooood)
 technique ScreenGlow
-<
-    // Script stuff is just for FX Composer
-    string Script =
-        "ClearSetDepth=ClearDepth;"
-        "RenderColorTarget=sceneMap;"
-        "ClearSetColor=ClearColor;"
-        "ClearSetDepth=ClearDepth;"
-        "Clear=Color;"
-        "Clear=Depth;"
-        "ScriptSignature=color;"
-        "ScriptExternal=;"
-        "Pass=DownSample;"
-        "Pass=GlowBlur1;"
-        "Pass=GlowBlur2;"
-        "Pass=ComposeFinalScene;";
->
 {
     // Sample full render area down to (1/4, 1/4) of its size!
     pass DownSample
-    <
-        string Script =
-            "RenderColorTarget0=downsampleMap;"
-            "ClearSetColor=ClearColor;"
-            "Clear=Color;"
-            "Draw=Buffer;";
-    >
     {
         // Disable alpha testing, else most pixels will be skipped
         // because of the highlight HDR technique tricks used here!
-        //AlphaTestEnable = false;
-        VertexShader = compile vs_1_1 VS_DownSample11();
+        VertexShader = compile vs_2_0 VS_DownSample11();
         PixelShader  = compile ps_2_0 PS_DownSample11(sceneMapSampler);
     }
 
     // Blur everything to make the glow effect.
     pass GlowBlur1
-    <
-        string Script =
-            "RenderColorTarget0=blurMap1;"
-            "ClearSetColor=ClearColor;"
-            "Clear=Color;"
-            "Draw=Buffer;";
-    >
     {
-        VertexShader = compile vs_1_1 VS_SimpleBlur(float2(2, 0));
+        VertexShader = compile vs_2_0 VS_SimpleBlur(float2(2, 0));
         PixelShader  = compile ps_2_0 PS_SimpleBlur(downsampleMapSampler);
     }
 
     pass GlowBlur2
-    <
-        string Script =
-            "RenderColorTarget0=blurMap2;"
-            "ClearSetColor=ClearColor;"
-            "Clear=Color;"
-            "Draw=Buffer;";
-    >
     {
-        VertexShader = compile vs_1_1 VS_SimpleBlur(float2(0, 2));
+        VertexShader = compile vs_2_0 VS_SimpleBlur(float2(0, 2));
         PixelShader  = compile ps_2_0 PS_SimpleBlur(blurMap1Sampler);
     }
 
     // And compose the final image with the Blurred Glow and the original image.
     pass ComposeFinalScene
-    <
-        string Script =
-            "RenderColorTarget0=;"
-            "Draw=Buffer;";            
-    >
     {
         // Save 1 pass by combining the radial blur effect and the compose pass.
         // This pass is not as fast as the previous passes (they were done
         // in 1/16 of the original screen size and executed very fast).
-        VertexShader = compile vs_1_1 VS_ComposeFinalImage11();
+        VertexShader = compile vs_2_0 VS_ComposeFinalImage11();
         PixelShader  = compile ps_2_0 PS_ComposeFinalImage11(
             sceneMapSampler, blurMap2Sampler);
     }
@@ -588,60 +545,24 @@ float4 PS_Blur20(
 
 // Same for ps_2_0, looks better and allows more control over the parameters.
 technique ScreenGlow20
-<
-    string Script =
-        "ClearSetDepth=ClearDepth;"
-        "RenderColorTarget=sceneMap;"
-        "ClearSetColor=ClearColor;"
-        "ClearSetDepth=ClearDepth;"
-        "Clear=Color;"
-        "Clear=Depth;"
-        "ScriptSignature=color;"
-        "ScriptExternal=;"
-        "Pass=DownSample;"
-        "Pass=GlowBlur1;"
-        "Pass=GlowBlur2;"
-        "Pass=ComposeFinalScene;";
->
 {
     // Sample full render area down to (1/4, 1/4) of its size!
     pass DownSample
-    <
-        string Script =
-            "RenderColorTarget0=downsampleMap;"
-            "ClearSetColor=ClearColor;"
-            "Clear=Color;"
-            "Draw=Buffer;";
-    >
     {
         // Disable alpha testing, else most pixels will be skipped
         // because of the highlight HDR technique tricks used here!
         //AlphaTestEnable = false;
-        VertexShader = compile vs_1_1 VS_DownSample20();
+        VertexShader = compile vs_2_0 VS_DownSample20();
         PixelShader  = compile ps_2_0 PS_DownSample20(sceneMapSampler);
     }
 
     pass GlowBlur1
-    <
-        string Script =
-            "RenderColorTarget0=blurMap1;"
-            "ClearSetColor=ClearColor;"
-            "Clear=Color;"
-            "Draw=Buffer;";
-    >
     {
         VertexShader = compile vs_2_0 VS_Blur20(float2(1, 0));
         PixelShader  = compile ps_2_0 PS_Blur20(downsampleMapSampler);
     }
 
     pass GlowBlur2
-    <
-        string Script =
-            "RenderColorTarget0=blurMap2;"
-            "ClearSetColor=ClearColor;"
-            "Clear=Color;"
-            "Draw=Buffer;";
-    >
     {
         VertexShader = compile vs_2_0 VS_Blur20(float2(0, 1));
         PixelShader  = compile ps_2_0 PS_Blur20(blurMap1Sampler);
@@ -649,15 +570,10 @@ technique ScreenGlow20
 
     // And compose the final image with the Blurred Glow and the original image.
     pass ComposeFinalScene
-    <
-        string Script =
-            "RenderColorTarget0=;"
-            "Draw=Buffer;";            
-    >
     {
         // This pass is not as fast as the previous passes (they were done
         // in 1/16 of the original screen size and executed very fast).
-        VertexShader = compile vs_1_1 VS_ScreenQuadSampleUp();
+        VertexShader = compile vs_2_0 VS_ScreenQuadSampleUp();
         PixelShader  = compile ps_2_0 PS_ComposeFinalImage20(
             sceneMapSampler, blurMap2Sampler);
     }

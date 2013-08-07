@@ -58,7 +58,7 @@ namespace RacingGame
                 }
 #if !XBOX360
             }
-            catch (NoSuitableGraphicsDeviceException)
+            catch (MonoGameGLException)
             {
 
                 MessageBox.Show("Pixel and vertex shaders 2.0 or greater are required.",

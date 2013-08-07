@@ -370,6 +370,10 @@ namespace RacingGame
         /// </summary>
         protected override void Update(GameTime gameTime)
         {
+            if (RacingGame.GameLogic.Input.Keyboard.IsKeyDown(Keys.Escape))
+            {
+                base.Exit();
+            }
             // Update game engine
             base.Update(gameTime);
 

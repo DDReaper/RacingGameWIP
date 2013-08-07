@@ -124,7 +124,7 @@ technique GenerateShadowMap
         // Disable culling to throw shadow even if virtual
         // shadow light is inside big buildings!
         CullMode = None;
-        VertexShader = compile vs_1_1 VS_GenerateShadowMap();
+        VertexShader = compile vs_2_0 VS_GenerateShadowMap();
         PixelShader  = compile ps_2_0 PS_GenerateShadowMap();
     }
 }
@@ -245,7 +245,7 @@ technique UseShadowMap
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_UseShadowMap();
+        VertexShader = compile vs_2_0 VS_UseShadowMap();
         // Using PS Instructions directly here, easier to tweak.
         
         // We just use the samplers for the shadow map here.

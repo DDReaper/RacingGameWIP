@@ -16,47 +16,20 @@ float4x4 worldViewProj    : WorldViewProjection;
 float4x4 world            : World;
 float4x4 viewInverse      : ViewInverse;
 
-float3 lightDir : Direction
-<
-    string UIName = "Light Direction";
-    string Object = "DirectionalLight";
-    string Space = "World";
-> = {-0.65f, 0.65f, -0.39f}; // Normalized by app. FxComposer still uses inverted stuff
+float3 lightDir : Direction = {-0.65f, 0.65f, -0.39f}; // Normalized by app. FxComposer still uses inverted stuff
 
 // The ambient, diffuse and specular colors are pre-multiplied with the light color!
-float4 ambientColor : Ambient
-<
-    string UIName = "Ambient Color";
-    string Space = "material";
-> = {0.1f, 0.1f, 0.1f, 1.0f};
+float4 ambientColor : Ambient = {0.1f, 0.1f, 0.1f, 1.0f};
 
-float4 diffuseColor : Diffuse
-<
-    string UIName = "Diffuse Color";
-    string Space = "material";
-> = {1.0f, 1.0f, 1.0f, 1.0f};
+float4 diffuseColor : Diffuse = {1.0f, 1.0f, 1.0f, 1.0f};
 
-float4 specularColor : Specular
-<
-    string UIName = "Specular Color";
-    string Space = "material";
-> = {1.0f, 1.0f, 1.0f, 1.0f};
+float4 specularColor : Specular = {1.0f, 1.0f, 1.0f, 1.0f};
 
-float shininess : SpecularPower
-<
-    string UIName = "Specular Power";
-    string UIWidget = "slider";
-    float UIMin = 1.0;
-    float UIMax = 128.0;
-    float UIStep = 1.0;
-> = 16.0;
+float shininess : SpecularPower = 16.0;
 
 // Texture and samplers
-texture diffuseTexture : Diffuse
-<
-    string UIName = "Diffuse Texture";
-    string ResourceName = "Landscape.dds";
->;
+texture diffuseTexture : Diffuse;
+
 sampler diffuseTextureSampler = sampler_state
 {
     Texture = <diffuseTexture>;
@@ -68,11 +41,8 @@ sampler diffuseTextureSampler = sampler_state
     MipFilter = Linear;
 };
 
-texture normalTexture : Diffuse
-<
-    string UIName = "Normal Texture";
-    string ResourceName = "LandscapeNormal.dds";
->;
+texture normalTexture : Diffuse;
+
 sampler normalTextureSampler = sampler_state
 {
     Texture = <normalTexture>;
@@ -84,12 +54,8 @@ sampler normalTextureSampler = sampler_state
     MipFilter = Linear;
 };
 
-texture reflectionCubeTexture : Environment
-<
-    string UIName = "Reflection cube map";
-    string ResourceType = "CUBE";
-    string ResourceName = "SkyCubeMap.dds";
->;
+texture reflectionCubeTexture : Environment;
+
 samplerCUBE reflectionCubeTextureSampler = sampler_state
 {
     Texture = <reflectionCubeTexture>;
@@ -101,11 +67,8 @@ samplerCUBE reflectionCubeTextureSampler = sampler_state
     MipFilter = Linear;
 };
 
-texture detailTexture : Diffuse
-<
-    string UIName = "Detail Texture";
-    string ResourceName = "LandscapeDetail.dds";
->;
+texture detailTexture : Diffuse;
+
 sampler detailTextureSampler = sampler_state
 {
     Texture = <detailTexture>;
@@ -117,12 +80,7 @@ sampler detailTextureSampler = sampler_state
     MipFilter = Linear;
 };
 
-texture NormalizeCubeTexture : Environment
-<
-    string UIName = "Normalize Cube Map Texture";
-    string ResourceType = "CUBE";
-    string ResourceName = "NormalizeCubeMap.dds";
->;
+texture NormalizeCubeTexture : Environment;
 
 samplerCUBE NormalizeCubeTextureSampler = sampler_state
 {
@@ -247,7 +205,7 @@ technique Diffuse
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_Diffuse();
+        VertexShader = compile vs_2_0 VS_Diffuse();
         sampler[0] = (diffuseTextureSampler);
         sampler[1] = (normalTextureSampler);
         PixelShaderConstant1[0] = <ambientColor>;
@@ -277,7 +235,7 @@ technique Diffuse20
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_Diffuse();
+        VertexShader = compile vs_2_0 VS_Diffuse();
         PixelShader  = compile ps_2_0 PS_Diffuse();
     }
 }
@@ -316,7 +274,7 @@ technique Diffuse20Transparent
         SrcBlend = SrcAlpha;
         DestBlend = InvSrcAlpha;
         
-        VertexShader = compile vs_1_1 VS_Diffuse();
+        VertexShader = compile vs_2_0 VS_Diffuse();
         PixelShader  = compile ps_2_0 PS_Diffuse_Transparent();
     }
 }
@@ -366,7 +324,7 @@ technique Specular
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_Specular();
+        VertexShader = compile vs_2_0 VS_Specular();
         sampler[0] = (diffuseTextureSampler);
         sampler[1] = (normalTextureSampler);
         sampler[2] = (NormalizeCubeTextureSampler);
@@ -479,7 +437,7 @@ technique Specular20
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_Specular20();
+        VertexShader = compile vs_2_0 VS_Specular20();
         PixelShader  = compile ps_2_0 PS_Specular20();
     }
 }
@@ -491,7 +449,7 @@ technique DiffuseSpecular
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_Specular();
+        VertexShader = compile vs_2_0 VS_Specular();
         sampler[0] = (diffuseTextureSampler);
         sampler[1] = (normalTextureSampler);
         sampler[2] = (NormalizeCubeTextureSampler);
@@ -568,7 +526,7 @@ technique DiffuseSpecular20
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_Specular20();
+        VertexShader = compile vs_2_0 VS_Specular20();
         PixelShader  = compile ps_2_0 PS_DiffuseSpecular20();
     }
 }
@@ -580,7 +538,7 @@ technique SpecularWithReflection
     pass P0
     {
         // Use the same as Specular
-        VertexShader = compile vs_1_1 VS_Specular();
+        VertexShader = compile vs_2_0 VS_Specular();
         sampler[0] = (diffuseTextureSampler);
         sampler[1] = (normalTextureSampler);
         sampler[2] = (NormalizeCubeTextureSampler);
@@ -704,7 +662,7 @@ technique SpecularWithReflection20
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_SpecularWithReflection20();
+        VertexShader = compile vs_2_0 VS_SpecularWithReflection20();
         PixelShader  = compile ps_2_0 PS_SpecularWithReflection20();
     }
 }
@@ -721,14 +679,7 @@ struct VertexOutput_Detail
     float3 lightVec     : COLOR0;
 };
 
-float DetailFactor
-<
-    string UIName = "Detail Factor";
-    string UIWidget = "slider";
-    float UIMin = 0.5;
-    float UIMax = 128.0;
-    float UIStep = 0.5;
-> = 24;
+float DetailFactor = 24;
 
 // Vertex shader function
 VertexOutput_Detail VS_DiffuseWithDetail(VertexInput In)
@@ -782,7 +733,7 @@ technique DiffuseWithDetail
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_DiffuseWithDetail();
+        VertexShader = compile vs_2_0 VS_DiffuseWithDetail();
         sampler[0] = (diffuseTextureSampler);
         sampler[1] = (normalTextureSampler);
         sampler[2] = (detailTextureSampler);
@@ -816,7 +767,7 @@ technique DiffuseWithDetail20
 {
     pass P0
     {
-        VertexShader = compile vs_1_1 VS_DiffuseWithDetail();
+        VertexShader = compile vs_2_0 VS_DiffuseWithDetail();
         PixelShader  = compile ps_2_0 PS_DiffuseWithDetail();
     }
 }

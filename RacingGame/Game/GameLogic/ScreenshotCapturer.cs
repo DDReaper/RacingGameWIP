@@ -158,7 +158,7 @@ namespace RacingGame.GameLogic
                     int[] backbuffer = new int[width*height];
 #if WINDOWS
 					// TODO !!!
-                    BaseGame.Device.GetBackBufferData(backbuffer);
+                    //BaseGame.Device.GetBackBufferData(backbuffer);
 #endif
 
                     tex.SetData(backbuffer);

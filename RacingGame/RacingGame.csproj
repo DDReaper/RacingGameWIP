@@ -74,7 +74,6 @@
     <Compile Include="Game\Helpers\RandomHelper.cs" />
     <Compile Include="Game\Helpers\Vector3Helper.cs" />
     <Compile Include="Game\Landscapes\Landscape.cs" />
-    <Compile Include="Game\Program.cs" />
     <Compile Include="Game\Storage.cs" />
     <Compile Include="RacingGameManager.cs" />
     <Compile Include="Game\Shaders\PostScreenGlow.cs" />
@@ -100,6 +99,7 @@
     <Reference Include="OpenTK">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\WindowsGL\OpenTK.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="Tao.Sdl">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\WindowsGL\Tao.Sdl.dll</HintPath>
     </Reference>
@@ -406,46 +406,6 @@
     </Content>
     <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Models\Windmill.xnb">
       <Link>Content\Models\Windmill.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\LandscapeNormalMapping.xnb">
-      <Link>Content\Shaders\LandscapeNormalMapping.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\LightingShader.xnb">
-      <Link>Content\Shaders\LightingShader.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\LineRendering.xnb">
-      <Link>Content\Shaders\LineRendering.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\NormalMapping.xnb">
-      <Link>Content\Shaders\NormalMapping.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\PostScreenGlow.xnb">
-      <Link>Content\Shaders\PostScreenGlow.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\PostScreenMenu.xnb">
-      <Link>Content\Shaders\PostScreenMenu.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\PostScreenShadowBlur.xnb">
-      <Link>Content\Shaders\PostScreenShadowBlur.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\PreScreenSkyCubeMapping.xnb">
-      <Link>Content\Shaders\PreScreenSkyCubeMapping.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\ReflectionSimpleGlass.xnb">
-      <Link>Content\Shaders\ReflectionSimpleGlass.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\Shaders\ShadowMap.xnb">
-      <Link>Content\Shaders\ShadowMap.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\textures\Ast.xnb">
@@ -1426,6 +1386,52 @@
     </Content>
     <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\TrackExpert.Track">
       <Link>Content\TrackExpert.Track</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\shaders\LandscapeNormalMapping.xnb">
+      <Link>Content\Shaders\LandscapeNormalMapping.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\shaders\LightingShader.xnb">
+      <Link>Content\Shaders\LightingShader.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\shaders\LineRendering.xnb">
+      <Link>Content\Shaders\LineRendering.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\shaders\NormalMapping.xnb">
+      <Link>Content\Shaders\NormalMapping.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\shaders\PostScreenGlow.xnb">
+      <Link>Content\Shaders\PostScreenGlow.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\shaders\PostScreenMenu.xnb">
+      <Link>Content\Shaders\PostScreenMenu.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\shaders\PostScreenShadowBlur.xnb">
+      <Link>Content\Shaders\PostScreenShadowBlur.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\shaders\PreScreenSkyCubeMapping.xnb">
+      <Link>Content\Shaders\PreScreenSkyCubeMapping.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\shaders\ReflectionSimpleGlass.xnb">
+      <Link>Content\Shaders\ReflectionSimpleGlass.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\shaders\ReflectionSimpleGlass_0.xnb">
+      <Link>Content\Shaders\ReflectionSimpleGlass_0.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\RacingGameContentBuilder\RacingGameContentBuilder\bin\Windows\Content\shaders\ShadowMap.xnb">
+      <Link>Content\Shaders\ShadowMap.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
